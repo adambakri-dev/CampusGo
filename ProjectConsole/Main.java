@@ -25,7 +25,6 @@ public class Main {
                     "\n1- Register " +
                     "\n2- Login" +
                     "\n3- Exit ");
-
             int choice= scanner.nextInt();
             if (choice==1){
                 registerController.Register();

@@ -21,7 +21,7 @@ public class Ride {
 
 
     // This will make a New Ride From The Driver
-    public Ride(int seats, Driver driver, HashMap<String, String> timeTravel, String location, String destination) {
+    public Ride(int seats, Driver driver, HashMap<String, String> timeTravel, String rideID, String location, String destination) {
         this.seats = seats;//This Number Of Seats Of The Car's Driver
         this.driver = driver;
         this.timeTravel = timeTravel;
