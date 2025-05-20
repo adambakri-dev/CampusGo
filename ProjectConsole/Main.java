@@ -24,7 +24,7 @@ public class Main {
             System.out.println("Choose what you want : " +
                     "\n1- Register " +
                     "\n2- Login" +
-                    "\n3- Exit \n this is a tist");
+                    "\n3- Exit ");
 
             int choice= scanner.nextInt();
             if (choice==1){
