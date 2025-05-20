@@ -15,11 +15,15 @@ public class RidesDataBase {
     private HashMap <String , Ride> RideDataBase;//=> this will have a Driver ID as a Key This and class Ride for the Value
     private HashMap<Driver, List<Ride>> driverRides = new HashMap<>();
 
-    public void addRide(int seats, Driver driver, HashMap<String, String> timeTravel, String rideID, String location, String destination) {
-        Ride ride = new Ride(seats, driver, timeTravel, rideID, location, destination);
+    public void addRide(int seats, Driver driver, HashMap<String,ArrayList<String>> timeTravel,  String location, String destination) {
+
+        Ride ride = new Ride(seats, driver, timeTravel, location, destination);
+
         driverRides.putIfAbsent(driver, new ArrayList<>());
+
         driverRides.get(driver).add(ride);
         System.out.println("Ride added successfully!");
+        System.out.println(driverRides.get(driver));
     }
 
     public List<Ride> getRidesByDriver(Driver driver) {

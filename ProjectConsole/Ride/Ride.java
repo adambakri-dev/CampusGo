@@ -5,6 +5,7 @@ import ProjectConsole.DataBase.UsersDataBase;
 import ProjectConsole.Users.Driver;
 import ProjectConsole.Users.Passenger;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 // This class will have a direct operation with class Driver
@@ -16,12 +17,12 @@ public class Ride {
     private String rideID;// This is A ID Of The Ride And It Will Make Easy To Search A Ride By ID
     private Driver driver;
     private List<String> passengers;//This is SomeThing temp
-    private HashMap<String, String> timeTravel = new HashMap<>();//This a HashMap for Travel Time This Will Save a Time In
+    private HashMap<String, ArrayList<String>> timeTravel = new HashMap<>();//This a HashMap for Travel Time This Will Save a Time In
     // The Day In The Key And The Time In The Value
 
 
     // This will make a New Ride From The Driver
-    public Ride(int seats, Driver driver, HashMap<String, String> timeTravel, String location, String destination) {
+    public Ride(int seats, Driver driver, HashMap<String, ArrayList<String>> timeTravel, String location, String destination) {
         this.seats = seats;//This Number Of Seats Of The Car's Driver
         this.driver = driver;
         this.timeTravel = timeTravel;
@@ -39,7 +40,7 @@ public class Ride {
     public String getRideID() {
         return rideID;
     }
-    public HashMap<String, String> getTimeTravel() {
+    public HashMap<String, ArrayList<String>> getTimeTravel() {
         return timeTravel;
     }
     public String getDestination() {

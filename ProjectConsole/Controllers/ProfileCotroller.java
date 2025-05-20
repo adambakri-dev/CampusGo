@@ -1,5 +1,6 @@
 package ProjectConsole.Controllers;
 
+import ProjectConsole.DataBase.RidesDataBase;
 import ProjectConsole.DataBase.UsersDataBase;
 import ProjectConsole.Ride.Ride;
 import ProjectConsole.Users.Driver;
@@ -9,6 +10,7 @@ import ProjectConsole.Users.Student;
 import java.util.*;
 
 public class ProfileCotroller {
+    private RidesDataBase RideDB;
     private UsersDataBase db;
     private Student student;
     private Driver driver;
@@ -52,7 +54,7 @@ public class ProfileCotroller {
     }
     public void AddRide(Driver driver){
         Scanner scanner=new Scanner(System.in);
-        HashMap<String , String> TimeTravel=new HashMap<>();
+        HashMap<String , ArrayList<String>> TimeTravel=new HashMap<>();
         ArrayList <String> AllDays=new ArrayList<>(Arrays.asList("Sunday","Monday","Tuesday","Wednesday","Thursday"));
         while (true) {
             for (int i = 0; i < AllDays.size(); i++) {
@@ -70,10 +72,13 @@ public class ProfileCotroller {
                 System.out.println("Choose a Time For A Ride Format=>(8:00) : ");
                 String Time = scanner.nextLine();
                 scanner.nextLine();
-                TimeTravel.put(ChosenDay, Time);
+                if (!TimeTravel.containsKey(ChosenDay)) {
+                    TimeTravel.put(ChosenDay, new ArrayList<>());
+                }
+                TimeTravel.get(ChosenDay).add(Time);
                 System.out.println(TimeTravel.get(ChosenDay));
                 System.out.println("You Choose this day for a ride : "+TimeTravel.get(ChosenDay) +"\n");
-                new Ride(driver.getSeats(),driver,TimeTravel, driver.getLocation(), driver.getCollege());
+                RideDB.addRide(driver.getSeats(),driver,TimeTravel, driver.getLocation(), driver.getCollege());
             }else {
                 System.out.println("you chosen a wrong choice");
             }

@@ -25,14 +25,13 @@ public class Main {
                     "\n1- Register " +
                     "\n2- Login" +
                     "\n3- Exit ");
-
             int choice= scanner.nextInt();
             if (choice==1){
                 registerController.Register();
             } else if (choice==2) {
                 loginController.Login();
             } else if (choice==3) {
-                System.out.println("Goodbye!");
+                System.out.println("Goodbye! see you later");
                 break;
             }else {
                 System.out.println("this isn't a option");
