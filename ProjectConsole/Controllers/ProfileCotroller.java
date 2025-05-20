@@ -30,23 +30,7 @@ public class ProfileCotroller {
         System.out.println("Enter your location : ");
         String Location= scanner.nextLine();
         if (seats>=1 && seats<=4 && !Location.isEmpty() && !CarModel.isEmpty()){
-            Driver driver=new Driver(seats,CarModel,Location,student);
-            this.driver=driver;
 
-            System.out.println("What you want as a driver : \n 1- Add Ride \n 2-Show Your Rides \n 3- Return \n 4-Exit To MainMenu ");
-            int DriverChoice= scanner.nextInt();
-
-            switch (DriverChoice){
-                case 1 :
-                    AddRide(driver);
-                    break;
-                case 2 :
-
-                case 3 :
-
-                case 4 :
-
-            }
 
         }else {
             System.out.println("You Have SomeThing Wrong");
@@ -95,5 +79,6 @@ public class ProfileCotroller {
         String year= scanner.nextLine();
         Passenger passenger=new Passenger(Location,major,year,student);
         System.out.println(passenger);
+        System.out.println("what you want to do as a passenger \n 1- Show Rides \n 2- Search For A Ride \n 3- Search For A Driver \n 4- Exit");
     }
 }
