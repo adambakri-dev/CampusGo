@@ -44,7 +44,7 @@ src/
 
 ├── DataBase/          # Ride data storage and management
 
-├── Utils/             # Input validation (email, password, ID)
+├── Utils/             # Input validation (email, password, ID, Name)
 
 ├── UI/                # APP GUI
 
