@@ -28,6 +28,12 @@ Object-Oriented Programming (OOP)
 
 Java Collections (HashMap, ArrayList)
 
+Jakarta Mail For Mail Verification
+
+Java Regex
+
+
+
 📁 Project Structure
 
 src/
