@@ -31,11 +31,17 @@ Java Collections (HashMap, ArrayList)
 📁 Project Structure
 
 src/
+
 ├── Controllers/       # Logic for registration, login, profile, etc.
+
 ├── Users/             # User roles: Driver, Passenger, Student
+
 ├── DataBase/          # Ride data storage and management
+
 ├── Utils/             # Input validation (email, password, ID)
+
 ├── UI/                # APP GUI
+
 └── Main.java          # Program entry point
 
 ## 📌 Future Improvements
