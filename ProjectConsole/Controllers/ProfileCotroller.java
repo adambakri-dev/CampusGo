@@ -10,11 +10,10 @@ import ProjectConsole.Users.Student;
 import java.util.*;
 
 public class ProfileCotroller {
-    private RidesDataBase RideDB;
-    private UsersDataBase db;
-    private Student student;
+    private RidesDataBase RideDB;// This will make us enter to RideDataBase Class
+    private UsersDataBase db;// This will make us enter a UserDataBase Class
+    private Student student;// This will make us a parent class (student) to child class (driver)
     private Driver driver;
-    private Ride ride;
     private Passenger passenger;
     public ProfileCotroller(UsersDataBase db , Student student){
         this.db=db;
@@ -29,8 +28,21 @@ public class ProfileCotroller {
         String CarModel= scanner.nextLine();
         System.out.println("Enter your location : ");
         String Location= scanner.nextLine();
+        System.out.println("Enter Your Major : ");
+        String Major= scanner.nextLine();
+        System.out.println("Enter Your Year : ");
+        String Year= scanner.nextLine();
         if (seats>=1 && seats<=4 && !Location.isEmpty() && !CarModel.isEmpty()){
-
+            Driver driver=new Driver(seats,CarModel,Location,student,Major,Year);
+            this.driver=driver;
+            System.out.println("Now you are a driver");
+            System.out.println("What you want to do as a driver \n 1- Add Ride \n 2- Show Rides \n 3- exit");
+            int Choice= scanner.nextInt();
+            if (Choice==1){
+                AddRide(driver);
+            } else if (Choice==2) {
+                
+            }
 
         }else {
             System.out.println("You Have SomeThing Wrong");
@@ -55,14 +67,18 @@ public class ProfileCotroller {
                 System.out.println("you chose a " + ChosenDay + " for do a ride in it ");
                 System.out.println("Choose a Time For A Ride Format=>(8:00) : ");
                 String Time = scanner.nextLine();
-                scanner.nextLine();
-                if (!TimeTravel.containsKey(ChosenDay)) {
-                    TimeTravel.put(ChosenDay, new ArrayList<>());
+                if (!TimeTravel.containsKey(ChosenDay)) {//This will check if this day are chosen before
+                    //if yes he will put the time normally
+                    // but if not we cant add a time because it is a String and our hashmap values are ArrayList
+                    // so we
+                    TimeTravel.put(ChosenDay, new ArrayList<String>());
                 }
                 TimeTravel.get(ChosenDay).add(Time);
                 System.out.println(TimeTravel.get(ChosenDay));
                 System.out.println("You Choose this day for a ride : "+TimeTravel.get(ChosenDay) +"\n");
+                RideDB=new RidesDataBase(driver,db);
                 RideDB.addRide(driver.getSeats(),driver,TimeTravel, driver.getLocation(), driver.getCollege());
+                RideDB.getRidesByDriver(driver);
             }else {
                 System.out.println("you chosen a wrong choice");
             }
@@ -80,7 +96,5 @@ public class ProfileCotroller {
         Passenger passenger=new Passenger(Location,major,year,student);
         System.out.println(passenger);
         System.out.println("what you want to do as a passenger \n 1- Show Rides \n 2- Search For A Ride \n 3- Search For A Driver \n 4- Exit");
-
-
     }
 }

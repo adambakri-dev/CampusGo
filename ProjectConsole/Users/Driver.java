@@ -1,5 +1,7 @@
 package ProjectConsole.Users;
 
+import ProjectConsole.Main;
+
 public class Driver extends Student{
     private int seats;
     private int income;
@@ -7,10 +9,10 @@ public class Driver extends Student{
     private String CarModel;
     private String location;
     private String Major;
-    private String years;
+    private String Year;
 
     // Constructors
-    public Driver(int seats , String CarModel , String Location , Student student){
+    public Driver(int seats , String CarModel , String Location , Student student , String Major , String Year){
         // This for get all data from a parent Class (Student)
         super(student.getId(), student.getName(), student.getPassword(),
                 student.getEmail(), student.getCollege(), student.getGender());
@@ -19,6 +21,8 @@ public class Driver extends Student{
         this.CountRides=0;
         this.CarModel=CarModel;
         this.location=Location;
+        this.Major=Major;
+        this.Year=Year;
     }
 
     // Getters

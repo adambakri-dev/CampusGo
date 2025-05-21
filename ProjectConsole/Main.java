@@ -17,8 +17,6 @@ public class Main {
         EmailCheck emailCheck=new EmailCheck();
         LoginController loginController = new LoginController(db);
         RegisterController registerController = new RegisterController(db);
-        ChooserRoleController chooserRoleController=new ChooserRoleController(db);
-        Driver driver;
         while (true){
             System.out.println("--- Welcome To CampusGo ---");
             System.out.println("Choose what you want : " +
