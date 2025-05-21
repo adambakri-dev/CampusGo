@@ -67,4 +67,5 @@ Software Engineering
 
 ## GitHub Profile
 https://github.com/adambakri-dev
-
+## LinkedIn Profile
+https://www.linkedin.com/in/adam-bakri-b52619344/
