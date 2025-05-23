@@ -1,6 +1,8 @@
 <component name="libraryTable">
   <library name="javafx-sdk-24">
-    <CLASSES />
+    <CLASSES>
+      <root url="file://$USER_HOME$/Desktop/learnprograming/openjfx-24_windows-x64_bin-sdk/javafx-sdk-24/lib" />
+    </CLASSES>
     <JAVADOC />
     <SOURCES>
       <root url="file://$USER_HOME$/Desktop/learnprograming/openjfx-24_windows-x64_bin-sdk/javafx-sdk-24/lib/src/javafx.base" />
@@ -15,6 +17,7 @@
       <root url="file://$USER_HOME$/Desktop/learnprograming/openjfx-24_windows-x64_bin-sdk/javafx-sdk-24/lib/src/jfx.incubator.richtext" />
       <root url="file://$USER_HOME$/Desktop/learnprograming/openjfx-24_windows-x64_bin-sdk/javafx-sdk-24" />
     </SOURCES>
+    <jarDirectory url="file://$USER_HOME$/Desktop/learnprograming/openjfx-24_windows-x64_bin-sdk/javafx-sdk-24/lib" recursive="false" />
     <jarDirectory url="file://$USER_HOME$/Desktop/learnprograming/openjfx-24_windows-x64_bin-sdk/javafx-sdk-24" recursive="false" type="SOURCES" />
   </library>
 </component>

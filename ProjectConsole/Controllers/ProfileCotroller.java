@@ -67,7 +67,8 @@ public class ProfileCotroller {
                 System.out.println("you chose a " + ChosenDay + " for do a ride in it ");
                 System.out.println("Choose a Time For A Ride Format=>(8:00) : ");
                 String Time = scanner.nextLine();
-                if (!TimeTravel.containsKey(ChosenDay)) {//This will check if this day are chosen before
+                if (!TimeTravel.containsKey(ChosenDay)) {
+                    //This will check if this day are chosen before
                     //if yes he will put the time normally
                     // but if not we cant add a time because it is a String and our hashmap values are ArrayList
                     // so we
