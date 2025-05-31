@@ -38,4 +38,8 @@ public class LoginController {
         System.out.println("HELLO WORLD");
     }
 
+    private void OpenRegisterUI(ActionEvent event){
+
+    }
+
 }
