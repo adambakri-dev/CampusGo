@@ -3,9 +3,14 @@ package Project.Controllers;
 import Project.DataBase.UsersDataBase;
 import Project.Users.Student;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.event.ActionEvent;
-import javafx.scene.input.MouseEvent;
+import java.io.*;
+import javafx.stage.Stage;
+import java.io.File;
 import java.util.Scanner;
 
 public class LoginController {
@@ -34,8 +39,21 @@ public class LoginController {
     private Button registerButton;
 
     @FXML
-    private void showWelcomeWindow(ActionEvent event) {
-        System.out.println("HELLO WORLD");
+    private void RegisterUI(ActionEvent event) {
+        System.out.println("hello");
+        try {
+            File fxmlFile =new File("C:\\Users\\watanimall\\IdeaProjects\\CollegeProject\\Project\\UI\\RegisterUI.fxml");
+            FXMLLoader loader = new FXMLLoader(fxmlFile.toURI().toURL());
+            Parent root = loader.load();
+
+            Stage stage = new Stage();
+            stage.setTitle("CampusGo Register");
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void OpenRegisterUI(ActionEvent event){

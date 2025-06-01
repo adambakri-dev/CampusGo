@@ -10,6 +10,7 @@ import java.util.Scanner;
 
 public class RegisterController {
     UsersDataBase db;
+    public RegisterController(){}
 
     public RegisterController(UsersDataBase db) {
         this.db = db;

@@ -106,7 +106,7 @@
                         <Insets bottom="10.0" top="5.0" />
                      </padding>
                   </HBox>
-                  <Button fx:id="loginin" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#showWelcomeWindow" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: #ffbb00;" text="Sign-In">
+                  <Button fx:id="loginin" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: #ffbb00;" text="Sign-In">
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>
@@ -130,7 +130,7 @@
                               <Insets bottom="2.0" />
                            </HBox.margin>
                         </Label>
-                        <Button fx:id="registerButton" mnemonicParsing="false" onAction="#showWelcomeWindow" prefHeight="25.0" prefWidth="61.0" style="-fx-background-color: F8F8FF;" text="Press Here" textFill="#0004ff">
+                        <Button fx:id="registerButton" mnemonicParsing="false" onAction="#RegisterUI" prefHeight="25.0" prefWidth="61.0" style="-fx-background-color: F8F8FF;" text="Press Here" textFill="#0004ff">
                            <padding>
                               <Insets bottom="2.0" />
                            </padding>
