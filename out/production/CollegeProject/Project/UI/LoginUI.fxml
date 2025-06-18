@@ -41,7 +41,7 @@
                   </Label>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
                      <children>
-                        <Label alignment="CENTER" prefHeight="30.0" prefWidth="115.0" style="-fx-background-color: #1d1a8f; -fx-background-radius: 200;" text="UserName : " textFill="WHITE">
+                        <Label alignment="CENTER" prefHeight="30.0" prefWidth="115.0" style="-fx-background-color: #1d1a8f; -fx-background-radius: 200;" text="Your ID : " textFill="WHITE">
                            <HBox.margin>
                               <Insets />
                            </HBox.margin>
@@ -55,7 +55,7 @@
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
-                        <TextField id="UserField" alignment="CENTER" prefHeight="30.0" prefWidth="150.0" promptText="Enter Your Username" style="-fx-background-radius: 15;">
+                        <TextField fx:id="IdField"  alignment="CENTER" prefHeight="30.0" prefWidth="150.0" promptText="Enter Your ID" style="-fx-background-radius: 15;">
                            <HBox.margin>
                               <Insets />
                            </HBox.margin>
@@ -90,7 +90,7 @@
                               <DropShadow height="40.0" radius="19.5" spread="0.2" width="40.0" />
                            </effect>
                         </Label>
-                        <PasswordField id="passfield" alignment="CENTER" prefHeight="30.0" prefWidth="150.0" promptText="Enter Your Pasword" style="-fx-background-radius: 15;">
+                        <PasswordField fx:id="PassField" alignment="CENTER" prefHeight="30.0" prefWidth="150.0" promptText="Enter Your Pasword" style="-fx-background-radius: 15;">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -106,7 +106,7 @@
                         <Insets bottom="10.0" top="5.0" />
                      </padding>
                   </HBox>
-                  <Button fx:id="loginin" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: #ffbb00;" text="Sign-In">
+                  <Button fx:id="loginin"  alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: #ffbb00;" text="Sign-In">
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>
@@ -130,7 +130,7 @@
                               <Insets bottom="2.0" />
                            </HBox.margin>
                         </Label>
-                        <Button fx:id="registerButton" mnemonicParsing="false" onAction="#RegisterUI" prefHeight="25.0" prefWidth="61.0" style="-fx-background-color: F8F8FF;" text="Press Here" textFill="#0004ff">
+                        <Button fx:id="registerButton" mnemonicParsing="false" onAction="#OpenRegisterUI" prefHeight="25.0" prefWidth="61.0" style="-fx-background-color: F8F8FF;" text="Press Here" textFill="#0004ff">
                            <padding>
                               <Insets bottom="2.0" />
                            </padding>

@@ -7,8 +7,6 @@ public class Student {
     private String email;
     private String college;
     private String gender;
-    private Boolean IsDriver;
-    private Boolean IsPassenger;
 
     // Constructors
     public Student(){}
@@ -19,24 +17,6 @@ public class Student {
         this.email=email;
         this.college=college;
         this.gender=gender;
-        this.IsDriver=false;
-        this.IsPassenger=false;
-    }
-
-    // IsDriver
-    public void SetIsDriver(Boolean IsDriver){
-        this.IsDriver=IsDriver;
-    }
-    public Boolean getIsDriver(){
-        return IsDriver;
-    }
-
-    // IsPassenger
-    public void SetIsPassenger(Boolean IsPassenger){
-        this.IsPassenger=IsPassenger;
-    }
-    public Boolean GetIsPassenger(){
-        return IsPassenger;
     }
 
     // Getters

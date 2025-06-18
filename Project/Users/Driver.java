@@ -2,8 +2,6 @@ package Project.Users;
 
 public class Driver extends Student{
     private int seats;
-    private int income;
-    private int CountRides;
     private String CarModel;
     private String location;
     private String Major;
@@ -15,8 +13,7 @@ public class Driver extends Student{
         super(student.getId(), student.getName(), student.getPassword(),
                 student.getEmail(), student.getCollege(), student.getGender());
         this.seats=seats;
-        this.income=0;
-        this.CountRides=0;
+
         this.CarModel=CarModel;
         this.location=Location;
         this.Major=Major;
@@ -27,17 +24,18 @@ public class Driver extends Student{
     public int getSeats() {
         return seats;
     }
-    public int getIncome() {
-        return income;
-    }
-    public int getCountRides() {
-        return CountRides;
-    }
+
     public String getCarModel() {
         return CarModel;
     }
     public String getLocation() {
         return location;
+    }
+    public String getMajor() {
+        return Major;
+    }
+    public String getYear() {
+        return Year;
     }
 
     // to String

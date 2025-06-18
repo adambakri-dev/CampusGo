@@ -1,63 +1,85 @@
 package Project.Controllers;
 
-import Project.DataBase.UsersDataBase;
+import Project.DataBase.UserDatabase;
 import Project.Users.Student;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.event.ActionEvent;
 import java.io.*;
-import javafx.stage.Stage;
-import java.io.File;
+import java.util.*;
 import java.util.Scanner;
 
 public class LoginController {
-    private UsersDataBase db;
-    ChooserRoleController chooserRoleController=new ChooserRoleController(db);
-    public LoginController(){
 
+    private UserDatabase userDB;
+
+    public LoginController(UserDatabase db) {
+        this.userDB = db;
     }
-    public void Login(){//=> this function for login
+    public void Login(){
+
+        ChooseRoleController ch=new ChooseRoleController(userDB);
         Scanner scanner=new Scanner(System.in);
-        System.out.println("enter the id : ");
-        String enteredid= scanner.nextLine();
-        System.out.println("enter the password : ");
-        String enteredpass= scanner.nextLine();
-        if (db.Login(enteredid,enteredpass))// This will check if id exist and check if this password for This User
-        {
-            Student student=db.GetUserByID(enteredid);
-            chooserRoleController.ChRole(student);
+        System.out.println("enter id : ");
+        String id= scanner.nextLine();
+        System.out.println("enter password : ");
+        String password= scanner.nextLine();
+        if (login(id,password)==null){
+            System.out.println("login failed");
+
+        }else {
+            System.out.println("login success.");
+            System.out.println("what you want to be :\n 1- Driver \n 2-Passenger");
+            int choice= scanner.nextInt();
+            if (choice==1){
+                ch.Driver(userDB.login(id,password));
+            } else if (choice==2) {
+                ch.Passenger(userDB.login(id,password));
+            }else {
+                System.out.println("that's not a choice");
+            }
         }
     }
-
-    @FXML
-     private Button loginin;
-
-    @FXML
-    private Button registerButton;
-
-    @FXML
-    private void RegisterUI(ActionEvent event) {
-        System.out.println("hello");
-        try {
-            File fxmlFile =new File("C:\\Users\\watanimall\\IdeaProjects\\CollegeProject\\Project\\UI\\RegisterUI.fxml");
-            FXMLLoader loader = new FXMLLoader(fxmlFile.toURI().toURL());
-            Parent root = loader.load();
-
-            Stage stage = new Stage();
-            stage.setTitle("CampusGo Register");
-            stage.setScene(new Scene(root));
-            stage.show();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public Student login(String id, String password) {
+        return userDB.login(id, password);
     }
 
-    private void OpenRegisterUI(ActionEvent event){
-
-    }
-
+//    @FXML
+//    private TextField IdField;
+//
+//    @FXML
+//    private PasswordField PassField;
+//    @FXML
+//    private Button loginin;
+//    public void LoginUI(ActionEvent event){
+//        System.out.println("hello");
+//        String Id = IdField.getText().trim();
+//        String password = PassField.getText().trim();
+//        if (db.Login(Id,password))// This will check if id exist and check if this password for This User
+//        {
+//            Student student=db.GetUserByID(Id);
+//            chooserRoleController.ChRole(student);
+//            System.out.println(Id);
+//        }else {
+//            db.getuser();
+//            System.out.println("hello 2");
+//        }
+//
+//    }
+//    @FXML
+//    private Button registerButton;
+//    @FXML
+//    private void OpenRegisterUI(ActionEvent event) {
+//        try {
+//            File fxmlFile =new File("C:\\Users\\watanimall\\IdeaProjects\\CollegeProject\\Project\\UI\\RegisterUI.fxml");
+//            FXMLLoader loader = new FXMLLoader(fxmlFile.toURI().toURL());
+//            Parent root = loader.load();
+//            Stage stage = new Stage();
+//            stage.setTitle("CampusGo Register");
+//            stage.setScene(new Scene(root));
+//            stage.show();
+//            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+//            currentStage.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+//}
 }
