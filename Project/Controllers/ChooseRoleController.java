@@ -6,11 +6,14 @@ import Project.Users.*;
 import java.util.Scanner;
 
 public class ChooseRoleController {
-    private UserDatabase userDB;
+    // This Class It is responsible to transfer a Student to Driver or Passenger as he want.
+    private UserDatabase userDB;//This is a CSV DataBase that conatain all information about all signed-in users.
 
     public ChooseRoleController(UserDatabase db) {
         this.userDB = db;
     }
+
+    //This Function Will Take A Information from Student To be A driver.
     public void Driver(Student student){
         Scanner scanner=new Scanner(System.in);
         System.out.println("Enter number of seats : " );
@@ -24,17 +27,17 @@ public class ChooseRoleController {
         String major= scanner.nextLine();
         System.out.println("enter in what year you are in college ; ");
         String year= scanner.nextLine();
-        becomeDriver(student,seats,carmodel,location,major,year);
+        becomeDriver(student,seats,carmodel,location,major,year);//And this function this will add a driver to Driver Class.
     }
     public boolean becomeDriver(Student student, int seats, String carModel, String location, String major, String year) {
         Driver driver = new Driver(seats, carModel, location, student, major, year);
-//        driver.setIncome(0);
-//        driver.setCountRides(0);
-        ProfileCotroller DriverProfile=new ProfileCotroller(userDB,student);
-        DriverProfile.DriverProfile(driver);
-        return userDB.updateUser(driver);
+        ProfileCotroller DriverProfile=new ProfileCotroller(userDB,driver);//this will make him enter the ProfileController as a Driver
+        DriverProfile.DriverProfile(driver);//this is a function of his operations like a driver
+        return userDB.updateUser(driver);//this will update a status of user from student to a driver in CSV file
 
     }
+
+    //This Function Will Take A Information from Student To be A Passenger.
     public void Passenger(Student student){
         Scanner scanner=new Scanner(System.in);
         System.out.println("enter your  location : ");
@@ -45,12 +48,12 @@ public class ChooseRoleController {
         String college= scanner.nextLine();
         System.out.println("enter in what year you are in college ; ");
         String year= scanner.nextLine();
-        becomePassenger(student,location,major,year,college);
+        becomePassenger(student,location,major,year,college);//And this function this will add a driver to Passenger Class.
     }
     public boolean becomePassenger(Student student, String location, String major, String year,String college) {
         Passenger passenger = new Passenger(location, major, year, student,college);
-        ProfileCotroller PassengerProfile=new ProfileCotroller(userDB,student);
-        PassengerProfile.PassengerProfile(passenger);
-        return userDB.updateUser(passenger);
+        ProfileCotroller PassengerProfile=new ProfileCotroller(userDB,passenger);//this will make him enter the ProfileController as a Passenger.
+        PassengerProfile.PassengerProfile(passenger);//this is a function of his operations as a Passenger.
+        return userDB.updateUser(passenger);//this will update a status of user from student to a Passenger in CSV file
     }
 }

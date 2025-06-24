@@ -13,6 +13,7 @@ public class Passenger extends Student {
         this.major=major;
         this.years=years;
         this.College=college;
+
     }
 
     //Getters

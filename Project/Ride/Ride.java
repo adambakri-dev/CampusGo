@@ -13,6 +13,7 @@ public class Ride {
     private HashMap<String, ArrayList<String>> timeTravel;
     private String location;
     private String destination;
+    private ArrayList <String> PassengersInTravel=new ArrayList<>();
 
     public Ride(int seats, Driver driver, HashMap<String, ArrayList<String>> timeTravel, String location, String destination) {
         this.seats = seats;
@@ -31,6 +32,6 @@ public class Ride {
 
     @Override
     public String toString() {
-        return driver.getName() + "," + location + "," + destination + "," + timeTravel.toString() + "," + seats;
+        return getDriverName() + "," + location + "," + destination + "," + timeTravel.toString() + "," + seats;
     }
 }

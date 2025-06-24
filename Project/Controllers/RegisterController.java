@@ -14,11 +14,9 @@ public class RegisterController {
     public RegisterController(UserDatabase db) {
         this.userDB = db;
     }
-
     public boolean register(String id, String name, String password, String email, String college, String gender) {
         if (userDB.userExists(id)) {
             return false; // المستخدم موجود
-
         }
         Student newStudent = new Student(id, name, password, email, college, gender);
         return userDB.register(newStudent);
@@ -31,6 +29,10 @@ public class RegisterController {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter your ID : ");
         String id = scanner.nextLine();
+        if (userDB.userExists(id)){
+            System.out.println("this id is used");
+            return;
+        }
         System.out.println("enter your name : ");
         String name = scanner.nextLine();
         System.out.println("enter your password : ");
@@ -45,10 +47,9 @@ public class RegisterController {
         if (register(id,name,password,email,college,gender)){
             System.out.println("register completed");
         }else {
-            System.out.println("this account already exist");
+            System.out.println("register failed");
         }
     }
-
 
 
 //    //===================================================================================================
