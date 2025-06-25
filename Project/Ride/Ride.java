@@ -23,6 +23,10 @@ public class Ride {
         this.destination = destination;
     }
 
+    public void setSeats(int seats) {
+        this.seats = seats;
+    }
+
     public Driver getDriver() { return driver; }
     public String getDriverName() { return driver.getName(); }
     public String getLocation() { return location; }

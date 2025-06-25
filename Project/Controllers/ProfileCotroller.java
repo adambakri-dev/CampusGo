@@ -117,11 +117,65 @@ public class ProfileCotroller {
                 for (Ride r : suitableRides) {
                     System.out.println(r);
                 }
-                PassengerProfile(passenger);
+                System.out.println("you want to register in one : (yes/no)");
+                String answer=scanner.nextLine();
+                if (answer.equals("no")){
+                    PassengerProfile(passenger);
+                } else if (answer.equals("yes")) {
+                    System.out.println("Enter the ride number to register in: ");
+                    for (int i = 0; i < suitableRides.size(); i++) {
+                        System.out.println((i + 1) + " - " + suitableRides.get(i));
+                    }
+                    int rideIndex = scanner.nextInt();
+                    scanner.nextLine();
+                    if (rideIndex >= 1 && rideIndex <= suitableRides.size()) {
+                        Ride selectedRide = suitableRides.get(rideIndex - 1);
+                        RideDB.registerPassengerToRide(passenger, selectedRide);
+                    } else {
+                        System.out.println("❌ Invalid ride number.");
+                    }
+                    PassengerProfile(passenger);
+                }else {
+                    System.out.println("this is a wrong choice");
+                }
+
             }
 
         } else if (choice == 2) {
-            System.out.println("🚧 Feature coming soon.");
+            System.out.println("Enter a driver name: ");
+            String driverName = scanner.nextLine();
+
+            RidesDataBase rideDB = new RidesDataBase(passenger);
+            List<Ride> driverRides = rideDB.getRidesByDriver(driverName);
+
+            if (driverRides.isEmpty()) {
+                System.out.println("❌ No rides found for this driver.");
+                PassengerProfile(passenger);
+                return;
+            }
+
+            for (int i = 0; i < driverRides.size(); i++) {
+                System.out.println(i+1 + " - " + driverRides.get(i));
+            }
+
+            System.out.println("Do you want to register for one of these rides? (yes/no): ");
+            String answer = scanner.nextLine();
+
+            if (answer.equalsIgnoreCase("yes")) {
+                System.out.println("Enter the ride number you want to register for: ");
+                int rideIndex = scanner.nextInt();
+                scanner.nextLine();
+
+                if (rideIndex >= 0 && rideIndex < driverRides.size()) {
+                    Ride selectedRide = driverRides.get(rideIndex-1);
+                    rideDB.registerPassengerToRide(passenger, selectedRide);
+                } else {
+                    System.out.println("❌ Invalid ride index.");
+                }
+            } else if (!answer.equalsIgnoreCase("no")) {
+                System.out.println("❌ Invalid choice.");
+            }
+
             PassengerProfile(passenger);
         } else if (choice == 3) {
             System.out.println("👋 Goodbye!");
