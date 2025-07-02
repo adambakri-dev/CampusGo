@@ -2,7 +2,7 @@ package Project.Users;
 
 public class Driver extends Student{
     private int seats;
-    private String CarModel;
+    protected String CarModel;
     private String location;
     private String Major;
     private String Year;
@@ -13,7 +13,6 @@ public class Driver extends Student{
         super(student.getId(), student.getName(), student.getPassword(),
                 student.getEmail(), student.getCollege(), student.getGender());
         this.seats=seats;
-
         this.CarModel=CarModel;
         this.location=Location;
         this.Major=Major;
@@ -37,6 +36,7 @@ public class Driver extends Student{
     public String getYear() {
         return Year;
     }
+
 
 
     // to String

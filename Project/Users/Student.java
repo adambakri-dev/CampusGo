@@ -17,6 +17,7 @@ public class Student {
         this.email=email;
         this.college=college;
         this.gender=gender;
+
     }
 
     // Getters
@@ -38,6 +39,7 @@ public class Student {
     public String getGender() {
         return gender;
     }
+
 
     // ToString
     public String toString() {

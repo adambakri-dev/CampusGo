@@ -1,4 +1,4 @@
 Role,ID,Name,Password,Email,College,Gender,Seats,CarModel,Location,Major,Year
 Student,202020,adamnew,adamnew,adamnew,Azrieli,male,0,,,,,
 Passenger,101010,adampass,adampass,adam.bakri2018@gmail.com,Azrieli,male,0,,shufat camp,software,2
-Driver,325597326,Adamba,Adam.ba2006,adam.bakri2018@gmail.com,Azrieli,male,4,,shufat camp,software engineering,3
+Driver,325597326,Adamba,Adam.ba2006,adam.bakri2018@gmail.com,Azrieli,male,4,bmw,shufat camp,software engineering,3

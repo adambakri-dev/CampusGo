@@ -2,6 +2,7 @@ package Project.Controllers;
 
 import Project.DataBase.RidesDataBase;
 import Project.DataBase.UserDatabase;
+import Project.Main;
 import Project.Ride.Ride;
 import Project.Users.Driver;
 import Project.Users.Passenger;
@@ -31,7 +32,7 @@ public class ProfileCotroller {
     public void DriverProfile(Driver driver) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Now you are a driver");
-        System.out.println("What you want to do as a driver \n 1- Add Ride \n 2- Show Rides \n 3- Delete Ride \n 4- exit");
+        System.out.println("What you want to do as a driver \n 1- Add Ride \n 2- Show Rides \n 3- Delete Ride \n 4- Change Role \n 5- Exit");
         int Choice = scanner.nextInt();
         RidesDataBase RidesDB = new RidesDataBase(driver);
         if (Choice == 1) {
@@ -46,6 +47,15 @@ public class ProfileCotroller {
             RidesDB.deleteMyRide(driver.getName(), index);
 
         } else if (Choice == 4) {
+            Student student1=new Student(driver.getId(), driver.getName(),  driver.getPassword(), driver.getEmail(), driver.getCollege(), driver.getGender());
+            ChooseRoleController chooseRoleController=new ChooseRoleController(DB);
+            System.out.println("what you want to be :\n 1- Driver \n 2-Passenger \n 3-Return");
+            int choice= scanner.nextInt();
+            if (choice==1){
+                chooseRoleController.becomeDriver(student1,driver.getSeats(), driver.getCarModel(), driver.getLocation(), driver.getMajor(), driver.getYear());
+            } else if (choice==2) {
+                chooseRoleController.becomePassenger(student1, driver.getLocation(), driver.getMajor(), driver.getYear(), driver.getCollege());
+            }
         }
     }
 

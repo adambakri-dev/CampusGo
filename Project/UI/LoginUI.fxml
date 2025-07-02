@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
+<?import javafx.scene.control.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.Blend?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
@@ -106,7 +102,7 @@
                         <Insets bottom="10.0" top="5.0" />
                      </padding>
                   </HBox>
-                  <Button fx:id="loginin" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: #ffbb00;" text="Sign-In">
+                  <Button fx:id="loginin" onAction="#LoginController" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: #ffbb00;" text="Sign-In">
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>
@@ -130,7 +126,7 @@
                               <Insets bottom="2.0" />
                            </HBox.margin>
                         </Label>
-                        <Button fx:id="registerButton" mnemonicParsing="false" onAction="#OpenRegisterUI" prefHeight="25.0" prefWidth="61.0" style="-fx-background-color: F8F8FF;" text="Press Here" textFill="#0004ff">
+                        <Button fx:id="registerButton" mnemonicParsing="false"  prefHeight="25.0" prefWidth="61.0" style="-fx-background-color: F8F8FF;" text="Press Here" textFill="#0004ff">
                            <padding>
                               <Insets bottom="2.0" />
                            </padding>
