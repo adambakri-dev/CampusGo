@@ -19,7 +19,7 @@
    <children>
       <VBox alignment="TOP_CENTER" layoutX="14.0" layoutY="15.0" prefHeight="200.0" prefWidth="837.0" style="-fx-background-color: F8F8FF; -fx-background-radius: 15;" AnchorPane.bottomAnchor="15.666666666666742" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="17.33333333333337" AnchorPane.topAnchor="15.0">
          <children>
-            <ImageView fitHeight="206.0" fitWidth="206.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../../Pictures/5027ef4d-9d30-4073-ac83-2a6696fb40a9-removebg-preview.png" />
                </image>
@@ -55,7 +55,7 @@
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="IdField"  alignment="CENTER" prefHeight="30.0" prefWidth="150.0" promptText="Enter Your ID" style="-fx-background-radius: 15;">
+                        <TextField fx:id="IdField" alignment="CENTER" prefHeight="30.0" prefWidth="150.0" promptText="Enter Your ID" style="-fx-background-radius: 15;">
                            <HBox.margin>
                               <Insets />
                            </HBox.margin>
@@ -106,7 +106,7 @@
                         <Insets bottom="10.0" top="5.0" />
                      </padding>
                   </HBox>
-                  <Button fx:id="loginin"  alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: #ffbb00;" text="Sign-In">
+                  <Button fx:id="loginin" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: #ffbb00;" text="Sign-In">
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>
