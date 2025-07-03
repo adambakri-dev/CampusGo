@@ -11,6 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="335.0" style="-fx-background-color: linear-gradient(to top, #0c0950, #1d1a8f, #261fb3);" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Project.Controllers.LoginController">
    <children>
       <VBox alignment="TOP_CENTER" layoutX="14.0" layoutY="15.0" prefHeight="200.0" prefWidth="837.0" style="-fx-background-color: F8F8FF; -fx-background-radius: 15;" AnchorPane.bottomAnchor="15.666666666666742" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="17.33333333333337" AnchorPane.topAnchor="15.0">
@@ -102,7 +103,7 @@
                         <Insets bottom="10.0" top="5.0" />
                      </padding>
                   </HBox>
-                  <Button fx:id="loginin" onAction="#LoginController" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: #ffbb00;" text="Sign-In">
+                  <Button fx:id="loginin" onAction="#Login" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: #ffbb00;" text="Sign-In">
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>
@@ -126,7 +127,7 @@
                               <Insets bottom="2.0" />
                            </HBox.margin>
                         </Label>
-                        <Button fx:id="registerButton" mnemonicParsing="false"  prefHeight="25.0" prefWidth="61.0" style="-fx-background-color: F8F8FF;" text="Press Here" textFill="#0004ff">
+                        <Button fx:id="registerButton" onAction="#GoToRegister" mnemonicParsing="false"  prefHeight="25.0" prefWidth="61.0" style="-fx-background-color: F8F8FF;" text="Press Here" textFill="#0004ff">
                            <padding>
                               <Insets bottom="2.0" />
                            </padding>

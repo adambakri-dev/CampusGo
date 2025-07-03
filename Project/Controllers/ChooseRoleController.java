@@ -2,7 +2,13 @@ package Project.Controllers;
 
 import Project.DataBase.UserDatabase;
 import Project.Users.*;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class ChooseRoleController {
@@ -11,6 +17,25 @@ public class ChooseRoleController {
 
     public ChooseRoleController(UserDatabase db) {
         this.userDB = db;
+    }
+    public ChooseRoleController(){}
+
+    public void ChooseRoleUI(){
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    new File("C:\\Users\\watanimall\\IdeaProjects\\CollegeProject\\Project\\UI\\ChooseRoleUI.fxml")
+                            .toURI().toURL()
+            );
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setTitle("CampusGo Choose Role");
+            stage.show();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

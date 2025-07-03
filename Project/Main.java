@@ -21,7 +21,7 @@ public class Main {
             int choice = scanner.nextInt();
             scanner.nextLine();
             if (choice == 1) {
-                registerController.Register();
+
             } else if (choice == 2) {
                 loginController.Login();
             } else if (choice == 3) {

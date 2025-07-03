@@ -138,7 +138,7 @@ public class UserDatabase {
                             .append(p.getEmail()).append(",")
                             .append(p.getCollege()).append(",")
                             .append(p.getGender()).append(",")
-                            .append("0,,") // لا يوجد مقاعد أو موديل سيارة
+                            .append("0,,")
                             .append(p.getLocation()).append(",")
                             .append(p.getMajor()).append(",")
                             .append(p.getYears()).append("\n");
@@ -165,11 +165,6 @@ public class UserDatabase {
 
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(",", -1);
-
-                if (parts.length < 7) {
-                    System.out.println("the line haven't a enough information " + line);
-                    continue;
-                }
 
                 String role = parts[0];
                 String id = parts[1];

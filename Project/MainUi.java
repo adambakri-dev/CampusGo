@@ -23,7 +23,6 @@ public class MainUi extends Application {
         } catch (Exception e) {
             e.printStackTrace(); // اطبع الخطأ في الـ console
         }
-
     }
 
     public static void main(String[] args) {

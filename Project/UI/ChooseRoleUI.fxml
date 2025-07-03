@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="335.0" style="-fx-background-color: linear-gradient(to top, #0c0950, #1d1a8f, #261fb3);" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Project.Controllers.LoginController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="335.0" style="-fx-background-color: linear-gradient(to top, #0c0950, #1d1a8f, #261fb3);" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Project.Controllers.ChooseRoleController">
    <children>
       <VBox alignment="TOP_CENTER" layoutX="14.0" layoutY="15.0" prefHeight="200.0" prefWidth="837.0" style="-fx-background-color: F8F8FF; -fx-background-radius: 15;" AnchorPane.bottomAnchor="15.666666666666742" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="17.33333333333337" AnchorPane.topAnchor="15.0">
          <children>
@@ -33,7 +33,7 @@
                         <Image url="@../../../../Pictures/Screenshot_2025-06-30_211812__1_-removebg-preview.png" />
                      </image>
                   </ImageView>
-                  <Button fx:id="registerbutton" mnemonicParsing="false" onAction="#RegisterUI" prefHeight="25.0" prefWidth="90.0" style="-fx-background-color: #1d1a8f; -fx-background-radius: 20;" text="Driver" textFill="WHITE">
+                  <Button fx:id="registerbutton" mnemonicParsing="false"  prefHeight="25.0" prefWidth="90.0" style="-fx-background-color: #1d1a8f; -fx-background-radius: 20;" text="Driver" textFill="WHITE">
                      <font>
                         <Font name="Arial Bold" size="14.0" />
                      </font>
@@ -53,7 +53,7 @@
                         <Image url="@../../../../Pictures/Screenshot_2025-06-30_211812-removebg-preview.png" />
                      </image>
                   </ImageView>
-                  <Button fx:id="registerbutton1" mnemonicParsing="false" onAction="#RegisterUI" style="-fx-background-color: #1d1a8f; -fx-background-radius: 20;" text="Passenger" textFill="WHITE">
+                  <Button fx:id="registerbutton1" mnemonicParsing="false"  style="-fx-background-color: #1d1a8f; -fx-background-radius: 20;" text="Passenger" textFill="WHITE">
                      <font>
                         <Font name="Arial Bold" size="14.0" />
                      </font>
