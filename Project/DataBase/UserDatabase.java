@@ -1,5 +1,6 @@
 package Project.DataBase;
 
+import Project.Controllers.LoginController;
 import Project.Controllers.ProfileCotroller;
 import Project.Users.Student;
 import Project.Users.Driver;
@@ -31,36 +32,20 @@ public class UserDatabase {
 
     //This functions will handle a login operations.
     public Student login(String id, String password) {
+        if (!DB.containsKey(id)) {
+            System.out.println("ID not found in database.");
+            return null;
+        }
         Student student = DB.get(id);
-        if (student != null && student.getPassword().equals(password)) {
-            UserDatabase db=new UserDatabase();
-            String[] userData = getUserDataById(id);//this for go to the line of the user by his id if he already have an account
-            if (userData != null && userData.length >= 12) {
-                String role = userData[0];// this for get a role of user to check if it driver/passenger/student
-                if (role.equals("Driver")) {
-                    int seats = Integer.parseInt(userData[7]);
-                    String carModel = userData[8];
-                    String location = userData[9];
-                    String major = userData[10];
-                    String year = userData[11];
-                    Student base = new Student(id, student.getName(), student.getPassword(), student.getEmail(), student.getCollege(), student.getGender());
-                    Driver driver = new Driver(seats, carModel, location, base, major, year);
-                    ProfileCotroller profileCotroller=new ProfileCotroller(db,driver);
-                    profileCotroller.DriverProfile(driver);// if he signed-in as a driver before he will transfer him to Driver profile
-                    return driver;
-                } else if (role.equals("Passenger")) {
-                    String location = userData[9];
-                    String major = userData[10];
-                    String year = userData[11];
-                    Passenger passenger = new Passenger(location, major, year, student, student.getCollege());
-                    ProfileCotroller profileCotroller=new ProfileCotroller(db,passenger);
-                    profileCotroller.PassengerProfile(passenger);// if he signed-in as a passenger before he will transfer him to passenger profile
-                    return passenger;
-                }
-            }
+        if (student == null) {
+            System.out.println("Student object is null.");
+            return null;
+        }
+        if (student.getPassword().equals(password)) {
             return student;
         }
-        return null; //login failed
+        System.out.println("Incorrect password.");
+        return null;
     }
     public List<Student> getAllStudents() {
         return new ArrayList<>(DB.values());
@@ -103,11 +88,15 @@ public class UserDatabase {
         if (user instanceof Driver) {
             return (Driver) user;
         }
-        return null; // ليس سائق
+        return null;
     }
-    public boolean isDriver(String id) {
+
+    public Passenger getPassengerById(String id) {
         Student user = DB.get(id);
-        return user instanceof Driver;
+        if (user instanceof Passenger) {
+            return (Passenger) user;
+        }
+        return null;
     }
 
     // =======================  CSV =======================
@@ -166,6 +155,11 @@ public class UserDatabase {
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(",", -1);
 
+                if (parts.length < 12) {
+                    System.out.println("خطأ في السطر: " + line);
+                    continue;
+                }
+
                 String role = parts[0];
                 String id = parts[1];
                 String name = parts[2];
@@ -173,42 +167,28 @@ public class UserDatabase {
                 String email = parts[4];
                 String college = parts[5];
                 String gender = parts[6];
+                String location = parts[9];
+
+                Student base = new Student(id, name, password, email, college, gender, location);
 
                 if (role.equals("Driver")) {
-                    if (parts.length < 12) {
-                        System.out.println("missed data for driver ;  " + line);
-                        continue;
-                    }
                     int seats = parts[7].isEmpty() ? 0 : Integer.parseInt(parts[7]);
                     String carModel = parts[8];
-                    String location = parts[9];
                     String major = parts[10];
                     String year = parts[11];
-
-                    Student base = new Student(id, name, password, email, college, gender);
-                    users.add(new Driver(seats, carModel, location, base, major, year));
-
+                    users.add(new Driver(seats, carModel, base, major, year));
                 } else if (role.equals("Passenger")) {
-                    if (parts.length < 12) {
-                        System.out.println("missed data for passenger :  " + line);
-                        continue;
-                    }
-                    String location = parts[9];
                     String major = parts[10];
                     String year = parts[11];
-
-                    Student base = new Student(id, name, password, email, college, gender);
-                    users.add(new Passenger(location, major, year, base, college));
-
+                    users.add(new Passenger(major, year, base, college));
                 } else {
-                    users.add(new Student(id, name, password, email, college, gender));
+                    users.add(base);
                 }
             }
 
         } catch (IOException e) {
-            System.out.println("wrong while reading CSV file :  " + e.getMessage());
+            System.out.println("خطأ أثناء قراءة الملف: " + e.getMessage());
         }
-
         return users;
     }
 }

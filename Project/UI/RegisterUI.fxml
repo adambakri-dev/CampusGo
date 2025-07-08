@@ -227,7 +227,7 @@
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
                      <children>
-                        <Label alignment="CENTER" prefHeight="30.0" prefWidth="115.0" style="-fx-background-color: #1d1a8f; -fx-background-radius: 200;" text="Phone : " textFill="WHITE">
+                        <Label alignment="CENTER" prefHeight="30.0" prefWidth="115.0" style="-fx-background-color: #1d1a8f; -fx-background-radius: 200;" text="Location" textFill="WHITE">
                            <HBox.margin>
                               <Insets />
                            </HBox.margin>
@@ -241,7 +241,7 @@
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="phone" alignment="CENTER" prefHeight="30.0" prefWidth="150.0" promptText="Enter Your Nmber" style="-fx-background-radius: 15;">
+                        <TextField fx:id="Location" alignment="CENTER" prefHeight="30.0" prefWidth="150.0" promptText="Enter Your Location" style="-fx-background-radius: 15;">
                            <HBox.margin>
                               <Insets />
                            </HBox.margin>

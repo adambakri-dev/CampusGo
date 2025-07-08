@@ -2,9 +2,15 @@ package Project.Controllers;
 
 import Project.DataBase.UserDatabase;
 import Project.Users.*;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -12,14 +18,32 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class ChooseRoleController {
+    private Student student;
+    @FXML
+    private TextField Seats;
+    @FXML
+    private TextField CarModel;
+    @FXML
+    private TextField Major;
+    @FXML
+    private TextField Years;
+    @FXML
+    private Button Driver;
+    @FXML
+    private Button Passenger;
     // This Class It is responsible to transfer a Student to Driver or Passenger as he want.
     private UserDatabase userDB;//This is a CSV DataBase that conatain all information about all signed-in users.
 
     public ChooseRoleController(UserDatabase db) {
         this.userDB = db;
     }
-    public ChooseRoleController(){}
-
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+    public void setUserDatabase(UserDatabase db) {
+        this.userDB = db;
+    }
+    public ChooseRoleController() {}
     public void ChooseRoleUI(){
         try {
             FXMLLoader loader = new FXMLLoader(
@@ -27,6 +51,8 @@ public class ChooseRoleController {
                             .toURI().toURL()
             );
             Parent root = loader.load();
+            ChooseRoleController controller = loader.getController();
+            controller.setStudent(student);
             Scene scene = new Scene(root);
             Stage stage = new Stage();
             stage.setScene(scene);
@@ -39,47 +65,57 @@ public class ChooseRoleController {
     }
 
 
-    //This Function Will Take A Information from Student To be A driver.
-    public void Driver(Student student){
-        Scanner scanner=new Scanner(System.in);
-        System.out.println("Enter number of seats : " );
-        int seats= scanner.nextInt();
-        System.out.println("enter a car model : ");
-        String carmodel= scanner.nextLine();
-        scanner.nextLine();
-        System.out.println("enter your  location : ");
-        String location = scanner.nextLine();
-        System.out.println("enter your major : ");
-        String major= scanner.nextLine();
-        System.out.println("enter in what year you are in college ; ");
-        String year= scanner.nextLine();
-        becomeDriver(student,seats,carmodel,location,major,year);//And this function this will add a driver to Driver Class.
-    }
-    public boolean becomeDriver(Student student, int seats, String carModel, String location, String major, String year) {
-        Driver driver = new Driver(seats, carModel, location, student, major, year);
-        ProfileCotroller DriverProfile=new ProfileCotroller(userDB,driver);//this will make him enter the ProfileController as a Driver
-        DriverProfile.DriverProfile(driver);//this is a function of his operations like a driver
-        return userDB.updateUser(driver);//this will update a status of user from student to a driver in CSV file
-
+    public void DriverRole(){
+        String id=student.getId();
+        userDB=new UserDatabase();
+        Driver driver = userDB.getDriverById(id);
+        if (driver==null){
+            System.out.println("you are not a driver");
+            ToDriverRole toDriverRole=new ToDriverRole();
+            toDriverRole.setStudent(student);
+            toDriverRole.ToDriverUI();
+        }else {
+            System.out.println("you are a driver");
+            GoToDriverProfile(driver);
+        }
     }
 
-    //This Function Will Take A Information from Student To be A Passenger.
-    public void Passenger(Student student){
-        Scanner scanner=new Scanner(System.in);
-        System.out.println("enter your  location : ");
-        String location = scanner.nextLine();
-        System.out.println("enter your major : ");
-        String major= scanner.nextLine();
-        System.out.println("enter you college : ");
-        String college= scanner.nextLine();
-        System.out.println("enter in what year you are in college ; ");
-        String year= scanner.nextLine();
-        becomePassenger(student,location,major,year,college);//And this function this will add a driver to Passenger Class.
+    public void PassengerRole(){
+        String id=student.getId();
+        userDB=new UserDatabase();
+        Passenger passenger=userDB.getPassengerById(id);
+        if (passenger==null){
+            System.out.println("you are not passenger");
+        }else {
+            System.out.println("you are passenger");
+        }
     }
-    public boolean becomePassenger(Student student, String location, String major, String year,String college) {
-        Passenger passenger = new Passenger(location, major, year, student,college);
-        ProfileCotroller PassengerProfile=new ProfileCotroller(userDB,passenger);//this will make him enter the ProfileController as a Passenger.
-        PassengerProfile.PassengerProfile(passenger);//this is a function of his operations as a Passenger.
-        return userDB.updateUser(passenger);//this will update a status of user from student to a Passenger in CSV file
+
+
+    public void GoToDriverProfile(Driver driver){
+
+    }
+    public void GoToPassengerProfile(){}
+
+    public static void showNotice(String message) {
+        Stage window = new Stage();
+        window.initModality(Modality.APPLICATION_MODAL);
+        window.setTitle("Notice");
+        window.setMinWidth(300);
+
+        Label label = new Label(message);
+        label.setStyle("-fx-font-size: 14px; -fx-text-fill: #1d1a8f;");
+
+        Button closeButton = new Button("OK" );
+        closeButton.setStyle("-fx-background-color: #ffbb00; -fx-text-fill: black; -fx-background-radius: 10;");
+        closeButton.setOnAction(e -> window.close());
+
+        VBox layout = new VBox(20);
+        layout.getChildren().addAll(label, closeButton);
+        layout.setStyle("-fx-padding: 20; -fx-background-color: #f8f8ff; -fx-alignment: center;");
+
+        Scene scene = new Scene(layout);
+        window.setScene(scene);
+        window.showAndWait();
     }
 }

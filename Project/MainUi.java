@@ -20,6 +20,7 @@ public class MainUi extends Application {
             primaryStage.setScene(scene);
             primaryStage.setTitle("CampusGo Login");
             primaryStage.show();
+
         } catch (Exception e) {
             e.printStackTrace(); // اطبع الخطأ في الـ console
         }

@@ -43,7 +43,7 @@ public class RegisterController {
     @FXML
     private TextField code;
     @FXML
-    private TextField phone;
+    private TextField Location;
     @FXML
     private Button registerbutton;
     @FXML
@@ -79,13 +79,13 @@ public class RegisterController {
         String password=Password.getText().trim();
         String Mail=mail.getText().trim();
         String Code=code.getText().trim();
-        String Phone=phone.getText().trim();
+        String location= Location.getText().trim();
         String college=College.getText().trim();
         this.userDB=new UserDatabase();
-        if (userId.isEmpty()&&username.isEmpty()&&password.isEmpty()&&Mail.isEmpty()&&Code.isEmpty()&&Phone.isEmpty()&&college.isEmpty()){
+        if (userId.isEmpty()&&username.isEmpty()&&password.isEmpty()&&Mail.isEmpty()&&Code.isEmpty()&&location.isEmpty()&&college.isEmpty()){
             showNotice("Register Failed");
         }else {
-            register(userId,username,password,Mail,college,getSelectedGender());
+            register(userId,username,password,Mail,college,getSelectedGender(),location);
             showNotice("Register Completed");
         }
     }
@@ -106,12 +106,12 @@ public class RegisterController {
     }
 
 
-    public boolean register(String id, String name, String password, String email, String college, String gender) {
+    public boolean register(String id, String name, String password, String email, String college, String gender,String location) {
         if (userDB.userExists(id)) {
             showNotice("This ID is already Exist");
             return false;
         }
-        Student newStudent = new Student(id, name, password, email, college, gender);
+        Student newStudent = new Student(id, name, password, email, college, gender,location);
         ReturnToLogin();
         return userDB.register(newStudent);
     }

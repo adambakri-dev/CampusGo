@@ -7,20 +7,26 @@ public class Student {
     private String email;
     private String college;
     private String gender;
+    private String Location;
 
     // Constructors
     public Student(){}
-    public Student(String id , String name , String password , String email , String college , String gender){
+    public Student(String id , String name , String password , String email , String college , String gender , String Location){
         this.id=id;
         this.name=name;
         this.password=password;
         this.email=email;
         this.college=college;
         this.gender=gender;
+        this.Location=Location;
 
     }
 
     // Getters
+
+    public String getLocation() {
+        return Location;
+    }
     public String getId(){
         return id;
     }

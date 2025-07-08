@@ -3,6 +3,7 @@ package Project.DataBase;
 import Project.Ride.Ride;
 import Project.Users.Driver;
 import Project.Users.Passenger;
+import Project.Users.Student;
 
 import java.io.*;
 import java.util.*;
@@ -176,7 +177,8 @@ public class RidesDataBase {
 
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             rides.clear();
-            String line = br.readLine();
+            String line = br.readLine(); // Skip header if exists
+
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(",", 5);
                 if (parts.length < 5) continue;
@@ -186,12 +188,12 @@ public class RidesDataBase {
                 String destination = parts[2];
                 HashMap<String, ArrayList<String>> timeTravel = deserializeTimeTravel(parts[3]);
                 int seats = Integer.parseInt(parts[4]);
-                Driver tempDriver = new Driver(0, "", "", new Project.Users.Student("","","","","","") {
-                    @Override
-                    public String getName() {
-                        return driverName;
-                    }
-                }, "", "");
+
+                // إنشاء كائن Student يحتوي فقط على اسم السائق
+                Student tempStudent = new Student("", driverName, "", "", "", "", "");
+
+                // إنشاء Driver باستخدام الطالب المؤقت
+                Driver tempDriver = new Driver(seats, "", tempStudent, "", "");
 
                 Ride ride = new Ride(seats, tempDriver, timeTravel, location, destination);
                 rides.add(ride);
