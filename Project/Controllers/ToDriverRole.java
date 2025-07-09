@@ -63,6 +63,8 @@ public class ToDriverRole {
             this.userDB=new UserDatabase();
             userDB.updateUser(driver);
             System.out.println("become a driver success");
+            ProfileCotroller profileCotroller=new ProfileCotroller();
+            profileCotroller.DriverProfileUI();
         }
 
     }

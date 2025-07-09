@@ -7,10 +7,27 @@ import Project.Ride.Ride;
 import Project.Users.Driver;
 import Project.Users.Passenger;
 import Project.Users.Student;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.stage.Stage;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 // This class will handle every driver/passenger operation and all those operations are connected with RideDataBase.
 public class ProfileCotroller {
+    @FXML
+    private Label Name;
+    @FXML
+    private Label College;
+    @FXML
+    private Label Mail;
+    @FXML
+    private Label Location;
+
     Ride ride;
     private RidesDataBase RideDB;
     private Student student;
@@ -18,16 +35,83 @@ public class ProfileCotroller {
     private Passenger passenger;
     private UserDatabase DB;
 
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+    public void setDriver(Driver driver) {
+        this.driver=driver;
+    }
+    public void setPassenger(Passenger passenger){
+        this.passenger=passenger;
+    }
     //This for enter this class from this constructor as a driver from login or ChooseRole.
     public ProfileCotroller(UserDatabase DB, Driver driver) {
         this.DB = DB;
         this.driver = driver;
     }
-
     //This for enter this class from this constructor as a passenger from login or ChooseRole.
     public ProfileCotroller(UserDatabase DB, Passenger passenger) {
         this.DB = DB;
         this.passenger = passenger;
+    }
+
+    public ProfileCotroller(){}
+
+    public void DriverProfileUI(){
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    new File("C:\\Users\\watanimall\\IdeaProjects\\CollegeProject\\Project\\UI\\DriverProfileUI.fxml")
+                            .toURI().toURL()
+            );
+            Parent root = loader.load();
+            ProfileCotroller controller = loader.getController();
+            controller.setStudent(student);
+            controller.setDriver(driver);
+            controller.initProfileData();
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.show();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void PassengerProfileUI(){
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    new File("C:\\Users\\watanimall\\IdeaProjects\\CollegeProject\\Project\\UI\\PassengerProfileUI.fxml")
+                            .toURI().toURL()
+            );
+            Parent root = loader.load();
+            ProfileCotroller controller = loader.getController();
+            controller.setStudent(student);
+            controller.setPassenger(passenger);
+            controller.initProfileData();
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.show();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void initProfileData() {
+        if (driver != null ) {
+            Name.setText(driver.getName());
+            College.setText(driver.getCollege());
+            Mail.setText(driver.getEmail());
+            Location.setText(driver.getLocation());
+        } else if (passenger!=null) {
+            Name.setText(passenger.getName());
+            College.setText(passenger.getCollege());
+            Mail.setText(passenger.getEmail());
+            Location.setText(passenger.getLocation());
+        }
     }
 }
 

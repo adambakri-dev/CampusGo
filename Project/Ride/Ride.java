@@ -4,7 +4,6 @@ import Project.Users.Driver;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 // This class will have a direct operation with class Driver
 // but passengers Operations will be in class RideDataBase
 public class Ride {
@@ -13,7 +12,6 @@ public class Ride {
     private HashMap<String, ArrayList<String>> timeTravel;
     private String location;
     private String destination;
-    private ArrayList <String> PassengersInTravel=new ArrayList<>();
 
     public Ride(int seats, Driver driver, HashMap<String, ArrayList<String>> timeTravel, String location, String destination) {
         this.seats = seats;

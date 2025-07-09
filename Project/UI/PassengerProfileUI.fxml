@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="335.0" style="-fx-background-color: linear-gradient(to top, #0c0950, #1d1a8f, #261fb3);" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Project.Controllers.ProfileCotroller">
+   <children>
+      <VBox alignment="TOP_CENTER" layoutX="14.0" layoutY="15.0" prefHeight="200.0" prefWidth="837.0" spacing="10.0" style="-fx-background-color: F8F8FF; -fx-background-radius: 15;" AnchorPane.bottomAnchor="15.666666666666742" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="17.33333333333337" AnchorPane.topAnchor="15.0">
+         <effect>
+            <DropShadow height="40.0" radius="19.5" spread="0.2" width="40.0" />
+         </effect>
+         <children>
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+               <children>
+                  <ImageView fitHeight="80.0" fitWidth="80.0">
+                     <image>
+                        <Image url="@../../../../Pictures/Screenshot_2025-06-30_211812-removebg-preview.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets left="5.0" top="10.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <VBox prefHeight="100.0" prefWidth="228.0">
+                     <children>
+                        <Label fx:id="Name" prefHeight="30.0" prefWidth="219.0" text="Name">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="Mail" prefHeight="30.0" prefWidth="219.0" text="E-mail" />
+                        <Label fx:id="Location" prefHeight="30.0" prefWidth="219.0" text="Location" />
+                        <Label fx:id="College" prefHeight="30.0" prefWidth="219.0" text="College" />
+                     </children>
+                  </VBox>
+               </children>
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" top="5.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="50.0" prefWidth="284.0" spacing="10.0" style="-fx-background-color: linear-gradient(to top, #0c0950, #1d1a8f, #261fb3); -fx-background-radius: 20;">
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" />
+               </VBox.margin>
+               <effect>
+                  <DropShadow height="40.0" radius="19.5" width="40.0" />
+               </effect>
+               <children>
+                  <Button fx:id="AddRide" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="20.0" prefWidth="100.0" style="-fx-background-radius: 20; -fx-background-color: #ffbb00;" text="Search Rides" textAlignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                     <effect>
+                        <DropShadow />
+                     </effect>
+                  </Button>
+                  <Button fx:id="DeleteRide" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="20.0" prefWidth="100.0" style="-fx-background-radius: 20; -fx-background-color: #ffbb00;" text="Search Driver" textAlignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                     <effect>
+                        <DropShadow />
+                     </effect>
+                  </Button>
+               </children>
+               <padding>
+                  <Insets left="10.0" right="10.0" />
+               </padding>
+            </HBox>
+            <ListView fx:id="RegisteredRides" prefHeight="314.0" prefWidth="304.0" style="-fx-background-color: F8F8FF;">
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" />
+               </VBox.margin>
+            </ListView>
+            <HBox alignment="CENTER" prefHeight="50.0" prefWidth="284.0" spacing="10.0" style="-fx-background-color: linear-gradient(to bottom, #0c0950, #1d1a8f, #261fb3); -fx-background-radius: 20;">
+               <effect>
+                  <DropShadow height="40.0" radius="19.5" width="40.0" />
+               </effect>
+               <children>
+                  <Button fx:id="ChangeRole" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="20.0" prefWidth="90.0" style="-fx-background-radius: 20; -fx-background-color: #ffbb00;" text="Change Role" textAlignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                     <effect>
+                        <DropShadow />
+                     </effect>
+                  </Button>
+                  <Button fx:id="Out" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="20.0" prefWidth="90.0" style="-fx-background-radius: 20; -fx-background-color: #ffbb00;" text="Sign-Out" textAlignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                     <effect>
+                        <DropShadow />
+                     </effect>
+                  </Button>
+               </children>
+               <padding>
+                  <Insets left="10.0" right="10.0" />
+               </padding>
+               <VBox.margin>
+                  <Insets bottom="5.0" left="10.0" right="10.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

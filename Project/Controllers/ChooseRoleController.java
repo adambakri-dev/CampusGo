@@ -8,25 +8,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 import java.io.File;
 import java.io.IOException;
-import java.util.Scanner;
 
 public class ChooseRoleController {
     private Student student;
-    @FXML
-    private TextField Seats;
-    @FXML
-    private TextField CarModel;
-    @FXML
-    private TextField Major;
-    @FXML
-    private TextField Years;
     @FXML
     private Button Driver;
     @FXML
@@ -34,14 +23,9 @@ public class ChooseRoleController {
     // This Class It is responsible to transfer a Student to Driver or Passenger as he want.
     private UserDatabase userDB;//This is a CSV DataBase that conatain all information about all signed-in users.
 
-    public ChooseRoleController(UserDatabase db) {
-        this.userDB = db;
-    }
+
     public void setStudent(Student student) {
         this.student = student;
-    }
-    public void setUserDatabase(UserDatabase db) {
-        this.userDB = db;
     }
     public ChooseRoleController() {}
     public void ChooseRoleUI(){
@@ -84,19 +68,34 @@ public class ChooseRoleController {
         String id=student.getId();
         userDB=new UserDatabase();
         Passenger passenger=userDB.getPassengerById(id);
-        if (passenger==null){
+        Driver driver = userDB.getDriverById(id);
+        if (passenger==null && driver==null){
             System.out.println("you are not passenger");
+            ToPassengerRole toPassengerRole=new ToPassengerRole();
         }else {
-            System.out.println("you are passenger");
+            if (passenger!=null){
+                System.out.println("you are passenger");
+                GoToPassengerProfile(passenger);
+            }else if (driver!=null){
+                Project.Users.Passenger passenger1=new Passenger(driver.getMajor(), driver.getYear(), student);
+                System.out.println("you was a driver and now you are passenger");
+                GoToPassengerProfile(passenger1);
+            }
         }
     }
 
-
     public void GoToDriverProfile(Driver driver){
-
+        ProfileCotroller profileCotroller=new ProfileCotroller();
+        profileCotroller.setDriver(driver);
+        profileCotroller.setStudent(student);
+        profileCotroller.DriverProfileUI();
     }
-    public void GoToPassengerProfile(){}
-
+    public void GoToPassengerProfile(Passenger passenger){
+        ProfileCotroller profileCotroller=new ProfileCotroller();
+        profileCotroller.setStudent(student);
+        profileCotroller.setPassenger(passenger);
+        profileCotroller.PassengerProfileUI();
+    }
     public static void showNotice(String message) {
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
