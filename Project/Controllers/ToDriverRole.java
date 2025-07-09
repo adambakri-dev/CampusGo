@@ -61,11 +61,12 @@ public class ToDriverRole {
         }else {
             Driver driver = new Driver(seat, carmodel, student, major, year);
             this.userDB=new UserDatabase();
-            userDB.updateUser(driver);
+            userDB.addDriver(driver);
             System.out.println("become a driver success");
+            ProfileCotroller profileCotroller=new ProfileCotroller();
+            profileCotroller.DriverProfileUI();
         }
 
     }
-    public void BecomePassenger(){}
 
 }

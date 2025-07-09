@@ -85,8 +85,13 @@ public class RegisterController {
         if (userId.isEmpty()&&username.isEmpty()&&password.isEmpty()&&Mail.isEmpty()&&Code.isEmpty()&&location.isEmpty()&&college.isEmpty()){
             showNotice("Register Failed");
         }else {
-            register(userId,username,password,Mail,college,getSelectedGender(),location);
-            showNotice("Register Completed");
+            if (register(userId,username,password,Mail,college,getSelectedGender(),location)){
+                showNotice("register success");
+            }else {
+                showNotice("register failed");
+            }
+
+
         }
     }
 

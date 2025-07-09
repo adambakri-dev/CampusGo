@@ -30,9 +30,9 @@ public class RidesDataBase {
     // Driver Operations :
 
     //======================= ADD RIDE ======================
-    public void addRide(int seats, Driver driver, HashMap<String, ArrayList<String>> timeTravel, String location, String destination) {
-        Ride ride = new Ride(seats, driver, timeTravel, location, destination); //this will make a ride from class ride to add it to CSV file
-        rides.add(ride); //rides is the name of database CSV file
+    public void addRide(int seats, Driver driver, String location, String destination, String hour, String dateAndDay, List<String> passengers) {
+        Ride ride = new Ride(seats, driver, location, destination, hour, dateAndDay, passengers);
+        rides.add(ride);
         saveAllRidesToCSV();
         System.out.println("✅ Ride added successfully!");
     }
@@ -151,78 +151,60 @@ public class RidesDataBase {
 
     private void saveAllRidesToCSV() {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath))) {
-            bw.write("DriverName,Location,Destination,TimeTravel,Seats");
+            bw.write("PassengerName,DriverName,Location,Destination,Hour,Date&Time");
             bw.newLine();
             for (Ride ride : rides) {
-                String line = ride.getDriverName() + "," +
-                        ride.getLocation() + "," +
-                        ride.getDestination() + "," +
-                        serializeTimeTravel(ride.getTimeTravel()) + "," +
-                        ride.getSeats();
-                bw.write(line);
-                bw.newLine();
+                for (String passenger : ride.getPassengers()) {
+                    String line = passenger + "," +
+                            ride.getDriverName() + "," +
+                            ride.getLocation() + "," +
+                            ride.getDestination() + "," +
+                            ride.getHour() + "," +
+                            ride.getDateAndDay();
+                    bw.write(line);
+                    bw.newLine();
+                }
             }
         } catch (IOException e) {
             System.out.println("❌ Error saving all rides to CSV: " + e.getMessage());
         }
     }
 
+
+
     private void loadRidesFromCSV() {
         File file = new File(filePath);
         if (!file.exists()) {
             System.out.println("📂 Ride file not found. Creating new file.");
-            saveAllRidesToCSV();
             return;
         }
 
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             rides.clear();
-            String line = br.readLine(); // Skip header if exists
+            String line = br.readLine(); // Skip header
 
             while ((line = br.readLine()) != null) {
-                String[] parts = line.split(",", 5);
-                if (parts.length < 5) continue;
+                String[] parts = line.split(",", -1);
+                if (parts.length < 6) continue;
 
-                String driverName = parts[0];
-                String location = parts[1];
-                String destination = parts[2];
-                HashMap<String, ArrayList<String>> timeTravel = deserializeTimeTravel(parts[3]);
-                int seats = Integer.parseInt(parts[4]);
+                String passengerName = parts[0];
+                String driverName = parts[1];
+                String location = parts[2];
+                String destination = parts[3];
+                String hour = parts[4];
+                String dateAndDay = parts[5];
 
-                // إنشاء كائن Student يحتوي فقط على اسم السائق
                 Student tempStudent = new Student("", driverName, "", "", "", "", "");
+                Driver tempDriver = new Driver(1, "", tempStudent, "", "");
 
-                // إنشاء Driver باستخدام الطالب المؤقت
-                Driver tempDriver = new Driver(seats, "", tempStudent, "", "");
+                List<String> passengers = new ArrayList<>();
+                passengers.add(passengerName);
 
-                Ride ride = new Ride(seats, tempDriver, timeTravel, location, destination);
+                Ride ride = new Ride(1, tempDriver, location, destination, hour, dateAndDay, passengers);
                 rides.add(ride);
             }
         } catch (IOException e) {
             System.out.println("❌ Error loading rides: " + e.getMessage());
         }
-    }
-
-    private String serializeTimeTravel(HashMap<String, ArrayList<String>> timeTravel) {
-        StringBuilder sb = new StringBuilder();
-        for (Map.Entry<String, ArrayList<String>> entry : timeTravel.entrySet()) {
-            sb.append(entry.getKey()).append("=")
-                    .append(String.join("|", entry.getValue()))
-                    .append(";");
-        }
-        return sb.toString();
-    }
-
-    private HashMap<String, ArrayList<String>> deserializeTimeTravel(String data) {
-        HashMap<String, ArrayList<String>> timeMap = new HashMap<>();
-        String[] entries = data.split(";");
-        for (String entry : entries) {
-            if (!entry.contains("=")) continue;
-            String[] parts = entry.split("=");
-            String day = parts[0];
-            ArrayList<String> times = new ArrayList<>(Arrays.asList(parts[1].split("\\|")));
-            timeMap.put(day, times);
-        }
-        return timeMap;
     }
 }
