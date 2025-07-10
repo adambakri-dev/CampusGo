@@ -15,10 +15,6 @@ import java.io.File;
 import java.io.IOException;
 
 public class ChooseRoleController {
-    private Stage currentStage;
-    public void setCurrentStage(Stage stage) {
-        this.currentStage = stage;
-    }
     private Student student;
     @FXML
     private Button Driver;
@@ -44,7 +40,6 @@ public class ChooseRoleController {
             Scene scene = new Scene(root);
             Stage stage = new Stage();
             stage.setScene(scene);
-            controller.setCurrentStage(stage);
             stage.setTitle("CampusGo Choose Role");
             stage.show();
         }
@@ -70,29 +65,20 @@ public class ChooseRoleController {
     }
 
     public void PassengerRole(){
-        String id = student.getId();
-        userDB = new UserDatabase();
-
-        Passenger passenger = userDB.getPassengerById(id);
+        String id=student.getId();
+        userDB=new UserDatabase();
+        Passenger passenger=userDB.getPassengerById(id);
         Driver driver = userDB.getDriverById(id);
-
-        if (passenger == null && driver == null) {
+        if (passenger==null && driver==null){
             System.out.println("you are not passenger");
-            ToPassengerRole toPassengerRole = new ToPassengerRole();
-            toPassengerRole.setStudent(student);
-            toPassengerRole.ToPassengerRoleUI();
-        } else {
-            if (passenger != null) {
+            ToPassengerRole toPassengerRole=new ToPassengerRole();
+        }else {
+            if (passenger!=null){
                 System.out.println("you are passenger");
                 GoToPassengerProfile(passenger);
-            } else if (driver != null) {
-                Passenger passenger1 = new Passenger(driver.getMajor(), driver.getYear(), driver);
-                boolean added = userDB.addPassenger(passenger1);
-                if (added) {
-                    showNotice("you are a passenger");
-                } else {
-                    showNotice("being a passenger failed");
-                }
+            }else if (driver!=null){
+                Project.Users.Passenger passenger1=new Passenger(driver.getMajor(), driver.getYear(), student);
+                System.out.println("you was a driver and now you are passenger");
                 GoToPassengerProfile(passenger1);
             }
         }
@@ -103,18 +89,12 @@ public class ChooseRoleController {
         profileCotroller.setDriver(driver);
         profileCotroller.setStudent(student);
         profileCotroller.DriverProfileUI();
-        if (currentStage!=null){
-            currentStage.close();
-        }
     }
     public void GoToPassengerProfile(Passenger passenger){
         ProfileCotroller profileCotroller=new ProfileCotroller();
         profileCotroller.setStudent(student);
         profileCotroller.setPassenger(passenger);
         profileCotroller.PassengerProfileUI();
-        if (currentStage!=null){
-            currentStage.close();
-        }
     }
     public static void showNotice(String message) {
         Stage window = new Stage();
