@@ -17,14 +17,13 @@ public class Ride {
     private String SelectedHour;
     private String DateAndDay;
     private List<String> passengers;
-    public Ride(int seats, Driver driver, String location, String destination, String hour, String DateAndDay, List<String> passengers) {
+    public Ride(int seats, Driver driver, String location, String destination, String hour, String DateAndDay) {
         this.seats = seats;
         this.driver = driver;
         this.location = location;
         this.destination = destination;
         this.SelectedHour=hour;
         this.DateAndDay=DateAndDay;
-        this.passengers=passengers;
     }
 
     public void setSeats(int seats) {

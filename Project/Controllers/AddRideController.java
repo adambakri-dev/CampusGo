@@ -87,7 +87,7 @@ public class AddRideController implements Initializable {
         String destination = driver.getCollege();
         List<String> passengers = new ArrayList<>();
 
-        rideDB.addRide(seats, driver, location, destination, selectedHour, dateAndDay, passengers);
+        rideDB.addRide(seats, driver, location, destination, selectedHour, dateAndDay);
         System.out.println("✅ Ride Added!");
         if (profileController != null) {
             profileController.loadDriverRidesToListView();

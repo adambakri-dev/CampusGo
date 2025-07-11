@@ -54,7 +54,7 @@
                   <DropShadow height="40.0" radius="19.5" width="40.0" />
                </effect>
                <children>
-                  <Button fx:id="SearchRides" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="20.0" prefWidth="100.0" style="-fx-background-radius: 20; -fx-background-color: #ffbb00;" text="Search Rides" textAlignment="CENTER">
+                  <Button fx:id="Reserve" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="20.0" prefWidth="90.0" style="-fx-background-radius: 20; -fx-background-color: #ffbb00;" text="Reserve" textAlignment="CENTER">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
@@ -94,14 +94,6 @@
                      </effect>
                   </Button>
                   <Button fx:id="Out" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="20.0" prefWidth="90.0" style="-fx-background-radius: 20; -fx-background-color: #ffbb00;" text="Sign-Out" textAlignment="CENTER">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                     <effect>
-                        <DropShadow />
-                     </effect>
-                  </Button>
-                  <Button fx:id="Reserve" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="20.0" prefWidth="90.0" style="-fx-background-radius: 20; -fx-background-color: #ffbb00;" text="Reserve" textAlignment="CENTER">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>

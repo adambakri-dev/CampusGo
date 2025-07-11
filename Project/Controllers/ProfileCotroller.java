@@ -14,7 +14,6 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Spinner;
 
 
 import java.io.File;
@@ -34,15 +33,7 @@ public class ProfileCotroller {
     @FXML
     private  ListView <Ride> RidesList;
 
-    //AddRideUI
-    @FXML
-    private Spinner <String> HourPicker;
-    @FXML
-    private DatePicker DatePicker;
-
     //Passenger UI
-    @FXML
-    private Button SearchRides;
     @FXML
     private Button SearchDriver;
     @FXML
@@ -93,7 +84,7 @@ public class ProfileCotroller {
             ProfileCotroller controller = loader.getController();
             controller.setStudent(student);
             controller.setDriver(driver);
-            controller.initProfileData();
+            controller.initDriverProfile();
             Scene scene = new Scene(root);
             Stage stage = new Stage();
             stage.setScene(scene);
@@ -154,7 +145,7 @@ public class ProfileCotroller {
             ProfileCotroller controller = loader.getController();
             controller.setStudent(student);
             controller.setPassenger(passenger);
-            controller.initProfileData1();
+            controller.initPassengerProfile();
             Scene scene = new Scene(root);
             Stage stage = new Stage();
             controller.setCurrentStage(stage);
@@ -170,7 +161,6 @@ public class ProfileCotroller {
         if (driver != null) {
             RidesDataBase rideDB = new RidesDataBase(driver); // قاعدة بيانات خاصة بالسائق
             List<Ride> driverRides = rideDB.getRidesByDriver(driver.getName());
-
             ObservableList<Ride> observableRides = FXCollections.observableArrayList(driverRides);
             RidesList.setItems(observableRides);
             RidesList.setCellFactory(param -> new ListCell<Ride>() {
@@ -191,7 +181,7 @@ public class ProfileCotroller {
         }
     }
 
-    public void initProfileData() {
+    public void initDriverProfile() {
         if (driver != null ) {
             Name.setText(driver.getName());
             College.setText(driver.getCollege());
@@ -200,7 +190,7 @@ public class ProfileCotroller {
             loadDriverRidesToListView();
         }
     }
-    public void initProfileData1(){
+    public void initPassengerProfile(){
         if (passenger!=null){
             Name.setText(passenger.getName());
             College.setText(passenger.getCollege());

@@ -22,12 +22,16 @@ public class ChooseRoleController {
     private Button Passenger;
     // This Class It is responsible to transfer a Student to Driver or Passenger as he want.
     private UserDatabase userDB;//This is a CSV DataBase that conatain all information about all signed-in users.
+    private Stage currentStage;
 
-
+    public void setCurrentStage(Stage stage) {
+        this.currentStage = stage;
+    }
     public void setStudent(Student student) {
         this.student = student;
     }
     public ChooseRoleController() {}
+
     public void ChooseRoleUI(){
         try {
             FXMLLoader loader = new FXMLLoader(
@@ -39,6 +43,7 @@ public class ChooseRoleController {
             controller.setStudent(student);
             Scene scene = new Scene(root);
             Stage stage = new Stage();
+            controller.setCurrentStage(stage);
             stage.setScene(scene);
             stage.setTitle("CampusGo Choose Role");
             stage.show();
@@ -47,7 +52,6 @@ public class ChooseRoleController {
             e.printStackTrace();
         }
     }
-
 
     public void DriverRole(){
         String id=student.getId();
@@ -85,12 +89,18 @@ public class ChooseRoleController {
     }
 
     public void GoToDriverProfile(Driver driver){
+        if (currentStage != null) {
+            currentStage.close();
+        }
         ProfileCotroller profileCotroller=new ProfileCotroller();
         profileCotroller.setDriver(driver);
         profileCotroller.setStudent(student);
         profileCotroller.DriverProfileUI();
     }
     public void GoToPassengerProfile(Passenger passenger){
+        if (currentStage != null) {
+            currentStage.close();
+        }
         ProfileCotroller profileCotroller=new ProfileCotroller();
         profileCotroller.setStudent(student);
         profileCotroller.setPassenger(passenger);

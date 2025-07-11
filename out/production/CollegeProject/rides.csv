@@ -1,3 +1,2 @@
-DriverName,Location,Destination,Hour,Seats,Date&Day,Passengers
-adam,Shufat camp,Azrieli,09:00,4,Wednesday 2025-07-23,
-adam,Shufat camp,Azrieli,17:45,4,Friday 2025-07-25,
+DriverName,Location,Destination,Hour,Date&Time,seats
+adam,Shufat camp,Azrieli,17:45,Friday 2025-07-25,4
