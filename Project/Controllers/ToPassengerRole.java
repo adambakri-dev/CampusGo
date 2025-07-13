@@ -20,9 +20,13 @@ public class ToPassengerRole {
     private javafx.scene.control.TextField Major;
     private Student student;
     private UserDatabase userDB;
+    private Stage currentStage;
     public ToPassengerRole(){}
     public void setStudent(Student student) {
         this.student = student;
+    }
+    public void setCurrentStage(Stage stage) {
+        this.currentStage = stage;
     }
     public void ToPassengerRoleUI(){
         try {
@@ -35,6 +39,7 @@ public class ToPassengerRole {
             controller.setStudent(student);
             Scene scene = new Scene(root);
             Stage stage = new Stage();
+            controller.setCurrentStage(stage);
             stage.setScene(scene);
             stage.setTitle("To Driver");
             stage.show();
@@ -50,14 +55,17 @@ public class ToPassengerRole {
         String year=Years.getText().trim();
 
         if (major.isEmpty()&&year.isEmpty()){
-            System.out.println("become a driver failed");
+            System.out.println("become passenger failed");
         }else {
             Passenger passenger=new Passenger(major,year,student);
             this.userDB=new UserDatabase();
             userDB.updateUser(passenger);
             System.out.println("become a passenger success");
             ProfileCotroller profileCotroller=new ProfileCotroller();
+            profileCotroller.setPassenger(passenger);
+            profileCotroller.setStudent(student);
             profileCotroller.PassengerProfileUI();
+            currentStage.close();
         }
 
     }

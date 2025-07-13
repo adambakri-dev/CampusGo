@@ -72,12 +72,10 @@ public class AddRideController implements Initializable {
     public void AddRide(){
         String selectedHour = HourPicker.getValue();
         LocalDate selectedDate = DatePicker.getValue();
-
         if (selectedHour == null || selectedDate == null) {
             System.out.println("choose a date&time");
             return;
         }
-
         String dayName = selectedDate.getDayOfWeek().toString().substring(0, 1).toUpperCase() +
                 selectedDate.getDayOfWeek().toString().substring(1).toLowerCase();
         String dateAndDay = dayName + " " + selectedDate.toString();

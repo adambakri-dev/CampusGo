@@ -64,6 +64,7 @@ public class ChooseRoleController {
             toDriverRole.ToDriverUI();
         }else {
             System.out.println("you are a driver");
+            userDB.updateUser(driver);
             GoToDriverProfile(driver);
         }
     }
@@ -76,13 +77,17 @@ public class ChooseRoleController {
         if (passenger==null && driver==null){
             System.out.println("you are not passenger");
             ToPassengerRole toPassengerRole=new ToPassengerRole();
+            toPassengerRole.setStudent(student);
+            toPassengerRole.ToPassengerRoleUI();
         }else {
             if (passenger!=null){
                 System.out.println("you are passenger");
+                userDB.updateUser(passenger);
                 GoToPassengerProfile(passenger);
             }else if (driver!=null){
                 Project.Users.Passenger passenger1=new Passenger(driver.getMajor(), driver.getYear(), student);
                 System.out.println("you was a driver and now you are passenger");
+                userDB.updateUser(passenger1);
                 GoToPassengerProfile(passenger1);
             }
         }

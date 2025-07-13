@@ -35,9 +35,11 @@ public class ProfileCotroller {
 
     //Passenger UI
     @FXML
-    private Button SearchDriver;
+    private Button Search;
     @FXML
     private Button Reserve;
+    @FXML
+    private ListView<Ride>RegisteredRides;
 
 
 
@@ -54,6 +56,8 @@ public class ProfileCotroller {
     private Button ChangeRole;
     @FXML
     private Button SignOut;
+    @FXML
+    private Button Out;
 
     Ride ride;
     private RidesDataBase RideDB;
@@ -74,6 +78,7 @@ public class ProfileCotroller {
     }
     public ProfileCotroller(){}
 
+    // Driver UI
     public void DriverProfileUI(){
         try {
             FXMLLoader loader = new FXMLLoader(
@@ -135,6 +140,7 @@ public class ProfileCotroller {
         
     }
 
+    // PassengerUI
     public void PassengerProfileUI(){
         try {
             FXMLLoader loader = new FXMLLoader(
@@ -146,6 +152,7 @@ public class ProfileCotroller {
             controller.setStudent(student);
             controller.setPassenger(passenger);
             controller.initPassengerProfile();
+            controller.loadReservedPassengerRides();
             Scene scene = new Scene(root);
             Stage stage = new Stage();
             controller.setCurrentStage(stage);
@@ -157,9 +164,37 @@ public class ProfileCotroller {
         }
     }
 
+    public void ReserverUI(){
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    new File("C:\\Users\\watanimall\\IdeaProjects\\CollegeProject\\Project\\UI\\SearchUI.fxml")
+                            .toURI().toURL()
+            );
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            SearchController controller = loader.getController();
+            controller.SetPassenger(passenger);
+            controller.setProfileController(this);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.show();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void SearchUI(){}
+
+
+
+
+
+
+
+    //initialize UI
     public void loadDriverRidesToListView() {
         if (driver != null) {
-            RidesDataBase rideDB = new RidesDataBase(driver); // قاعدة بيانات خاصة بالسائق
+            RidesDataBase rideDB = new RidesDataBase(driver);
             List<Ride> driverRides = rideDB.getRidesByDriver(driver.getName());
             ObservableList<Ride> observableRides = FXCollections.observableArrayList(driverRides);
             RidesList.setItems(observableRides);
@@ -180,6 +215,49 @@ public class ProfileCotroller {
             });
         }
     }
+
+    public void loadReservedPassengerRides() {
+        if (passenger != null) {
+            RidesDataBase rideDB = new RidesDataBase(passenger);
+            List<Ride> registeredRides = rideDB.getRegisteredRidesForPassenger(passenger);
+            ObservableList<Ride> observableRides = FXCollections.observableArrayList(registeredRides);
+            RegisteredRides.setItems(observableRides);
+            RegisteredRides.setCellFactory(param -> new ListCell<Ride>() {
+                @Override
+                protected void updateItem(Ride ride, boolean empty) {
+                    super.updateItem(ride, empty);
+                    if (empty || ride == null) {
+                        setText(null);
+                    } else {
+                        setText(
+                                ride.getLocation() + " ➡ " + ride.getDestination() +
+                                        " 🕐 " + ride.getHour() +
+                                        " 📅 " + ride.getDateAndDay() +
+                                        " 👥 " + ride.getSeats() + " seats"
+                        );
+                    }
+                }
+            });
+        }
+    }
+    public void LoginUI(){
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    new File("C:\\Users\\watanimall\\IdeaProjects\\CollegeProject\\Project\\UI\\lLoginUI.fxml")
+                            .toURI().toURL()
+            );
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.show();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
     public void initDriverProfile() {
         if (driver != null ) {

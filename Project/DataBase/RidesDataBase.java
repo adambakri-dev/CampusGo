@@ -70,53 +70,57 @@ public class RidesDataBase {
         System.out.println("✅ Ride deleted successfully from CSV.");
     }
 
-    // =============== REGISTER PASSENGER TO RIDE ================
-    public void registerPassengerToRide(Passenger passenger, Ride ride) {
-        // تحقق من التسجيل المسبق
-        try (BufferedReader reader = new BufferedReader(new FileReader(passengerRidesFile))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(",");
-                if (parts.length >= 6) {
-                    String passengerId = parts[0];
-                    String driverName = parts[2];
-                    String location = parts[3];
-                    String destination = parts[4];
-                    String dateAndTime = parts[5];
+    public List<Ride> searchRides(String location, String destination, String hour, String dateAndDay) {
+        List<Ride> matchedRides = new ArrayList<>();
+        for (Ride ride : rides) {
+            if (ride.getLocation().equalsIgnoreCase(location) &&
+                    ride.getDestination().equalsIgnoreCase(destination) &&
+                    ride.getHour().equalsIgnoreCase(hour) &&
+                    ride.getDateAndDay().equalsIgnoreCase(dateAndDay)) {
+                matchedRides.add(ride);
+            }
+        }
 
-                    if (passengerId.equals(passenger.getId()) &&
-                            driverName.equals(ride.getDriverName()) &&
-                            location.equals(ride.getLocation()) &&
-                            destination.equals(ride.getDestination()) &&
-                            dateAndTime.equals(ride.getDateAndDay())) {
-                        System.out.println("❌ You have already registered for this ride.");
-                        return;
-                    }
-                }
+        return matchedRides;
+    }
+
+    public List<Ride> getRegisteredRidesForPassenger(Passenger passenger) {
+        List<Ride> registeredRides = new ArrayList<>();
+        File file = new File("C:\\Users\\watanimall\\IdeaProjects\\CollegeProject\\passenger_rides.csv");
+        if (!file.exists()) {
+            System.out.println("📂 passenger_rides.csv file not found.");
+            return registeredRides;
+        }
+        try (BufferedReader reader = new BufferedReader(new FileReader("C:\\Users\\watanimall\\IdeaProjects\\CollegeProject\\passenger_rides.csv"))) {
+            String line = reader.readLine();
+
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",", -1);
+                if (parts.length < 6) continue;
+                String passengerName = parts[0];
+                String driverName = parts[1];
+                String location = parts[2];
+                String destination = parts[3];
+                String hour = parts[4];
+                String dateAndDay = parts[5];
+
+                if (!passenger.getName().equals(passengerName)) continue;
+
+                Student tempStudent = new Student("", driverName, "", "", "", "", "");
+                Driver tempDriver = new Driver(1, "", tempStudent, "", "");
+
+                Ride ride = new Ride(1, tempDriver, location, destination, hour, dateAndDay);
+                registeredRides.add(ride);
             }
         } catch (IOException e) {
-            System.out.println("❌ Error reading passenger ride file: " + e.getMessage());
-            return;
+            System.out.println("❌ Error reading passenger_rides.csv: " + e.getMessage());
         }
 
-        if (ride.getSeats() <= 0) {
-            System.out.println("❌ No available seats in this ride.");
-            return;
-        }
-
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(passengerRidesFile, true))) {
-            writer.write(passenger.getId() + "," + passenger.getName() + "," +
-                    ride.getDriverName() + "," + ride.getLocation() + "," +
-                    ride.getDestination() + "," + ride.getDateAndDay());
-            writer.newLine();
-            System.out.println("✅ Passenger registered to ride successfully!");
-            System.out.println("More info about driver:\n" + ride.getDriver().getMajor() + "\n" + ride.getDriver().getEmail());
-        } catch (IOException e) {
-            System.out.println("❌ Error saving passenger ride registration: " + e.getMessage());
-        }
-        ride.setSeats(ride.getSeats() - 1);
-        saveAllRidesToCSV();
+        return registeredRides;
     }
+
+
+
 
     // =============== GET RIDES BY DRIVER ===================
     public List<Ride> getRidesByDriver(String driverName) {
@@ -159,7 +163,7 @@ public class RidesDataBase {
 
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             rides.clear();
-            String line = br.readLine(); // تخطي الرأس
+            String line = br.readLine();
 
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(",", -1);
@@ -178,7 +182,7 @@ public class RidesDataBase {
                     seats = Integer.parseInt(parts[5].trim());
                 } catch (NumberFormatException e) {
                     System.out.println("❌ Invalid seats number format in line: " + line);
-                    continue;  // تجاهل هذا السطر واستمر في قراءة باقي السطور
+                    continue;
                 }
 
                 Student tempStudent = new Student("", driverName, "", "", "", "", "");

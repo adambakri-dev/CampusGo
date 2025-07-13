@@ -25,9 +25,13 @@ public class ToDriverRole {
 
     private UserDatabase userDB;
     private Student student;
+    private Stage currentStage;
     public ToDriverRole(){}
     public void setStudent(Student student) {
         this.student = student;
+    }
+    public void setCurrentStage(Stage stage) {
+        this.currentStage = stage;
     }
 
     public void ToDriverUI(){
@@ -41,6 +45,7 @@ public class ToDriverRole {
             controller.setStudent(student);
             Scene scene = new Scene(root);
             Stage stage = new Stage();
+            controller.setCurrentStage(stage);
             stage.setScene(scene);
             stage.setTitle("To Driver");
             stage.show();
@@ -64,9 +69,10 @@ public class ToDriverRole {
             userDB.addDriver(driver);
             System.out.println("become a driver success");
             ProfileCotroller profileCotroller=new ProfileCotroller();
+            profileCotroller.setStudent(student);
+            profileCotroller.setDriver(driver);
             profileCotroller.DriverProfileUI();
+            currentStage.close();
         }
-
     }
-
 }
