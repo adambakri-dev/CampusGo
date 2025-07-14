@@ -73,7 +73,7 @@ public class SearchController implements Initializable {
 
         String dayName = selectedDate.getDayOfWeek().toString().substring(0, 1).toUpperCase()
                 + selectedDate.getDayOfWeek().toString().substring(1).toLowerCase();
-        String dateAndDay = dayName + " " + selectedDate.toString(); // مثال: Friday 2025-07-25
+        String dateAndDay = dayName + " " + selectedDate.toString();
 
         List<Ride> matchedRides = rideDB.searchRides(location, destination, hour, dateAndDay);
 
@@ -81,7 +81,7 @@ public class SearchController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("No Rides Found");
             alert.setHeaderText(null);
-            alert.setContentText("❌ لا توجد رحلات مطابقة للمواصفات.");
+            alert.setContentText("there is not suitable rides");
             alert.show();
             return;
         }

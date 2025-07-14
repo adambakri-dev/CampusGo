@@ -46,7 +46,7 @@
                   <Insets left="10.0" right="10.0" top="5.0" />
                </VBox.margin>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="50.0" prefWidth="284.0" spacing="10.0" style="-fx-background-color: linear-gradient(to top, #0c0950, #1d1a8f, #261fb3); -fx-background-radius: 20;">
+            <HBox alignment="CENTER" prefHeight="43.0" prefWidth="284.0" spacing="10.0" style="-fx-background-color: linear-gradient(to top, #0c0950, #1d1a8f, #261fb3); -fx-background-radius: 20;">
                <VBox.margin>
                   <Insets left="10.0" right="10.0" />
                </VBox.margin>
@@ -54,7 +54,7 @@
                   <DropShadow height="40.0" radius="19.5" width="40.0" />
                </effect>
                <children>
-                  <Button fx:id="AddRide" onAction="#AddRideUI" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="20.0" prefWidth="90.0" style="-fx-background-radius: 20; -fx-background-color: #ffbb00;" text="Add Ride" textAlignment="CENTER">
+                  <Button fx:id="AddRide" contentDisplay="CENTER" mnemonicParsing="false" onAction="#AddRideUI" prefHeight="20.0" prefWidth="90.0" style="-fx-background-radius: 20; -fx-background-color: #ffbb00;" text="Add Ride" textAlignment="CENTER">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
@@ -62,7 +62,7 @@
                         <DropShadow />
                      </effect>
                   </Button>
-                  <Button fx:id="DeleteRide" onAction="#DeleteRideUI" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="20.0" prefWidth="90.0" style="-fx-background-radius: 20; -fx-background-color: #ffbb00;" text="Delete Ride" textAlignment="CENTER">
+                  <Button fx:id="DeleteRide" contentDisplay="CENTER" mnemonicParsing="false" onAction="#DeleteRideUI" prefHeight="20.0" prefWidth="90.0" style="-fx-background-radius: 20; -fx-background-color: #ffbb00;" text="Delete Ride" textAlignment="CENTER">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
@@ -75,40 +75,11 @@
                   <Insets left="10.0" right="10.0" />
                </padding>
             </HBox>
-            <ListView fx:id="RidesList" prefHeight="314.0" prefWidth="304.0" style="-fx-background-color: F8F8FF;">
+            <ListView fx:id="RidesList" prefHeight="383.0" prefWidth="284.0" style="-fx-background-color: F8F8FF;">
                <VBox.margin>
                   <Insets left="10.0" right="10.0" />
                </VBox.margin>
             </ListView>
-            <HBox alignment="CENTER" prefHeight="50.0" prefWidth="284.0" spacing="10.0" style="-fx-background-color: linear-gradient(to bottom, #0c0950, #1d1a8f, #261fb3); -fx-background-radius: 20;">
-               <effect>
-                  <DropShadow height="40.0" radius="19.5" width="40.0" />
-               </effect>
-               <children>
-                  <Button fx:id="ChangeRole" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="20.0" prefWidth="90.0" style="-fx-background-radius: 20; -fx-background-color: #ffbb00;" text="Change Role" textAlignment="CENTER">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                     <effect>
-                        <DropShadow />
-                     </effect>
-                  </Button>
-                  <Button fx:id="SignOut" onAction="#LoginUI" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="20.0" prefWidth="90.0" style="-fx-background-radius: 20; -fx-background-color: #ffbb00;" text="Sign-Out" textAlignment="CENTER">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                     <effect>
-                        <DropShadow />
-                     </effect>
-                  </Button>
-               </children>
-               <padding>
-                  <Insets left="10.0" right="10.0" />
-               </padding>
-               <VBox.margin>
-                  <Insets bottom="5.0" left="10.0" right="10.0" />
-               </VBox.margin>
-            </HBox>
          </children>
       </VBox>
    </children>

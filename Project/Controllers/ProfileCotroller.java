@@ -40,6 +40,8 @@ public class ProfileCotroller {
     private Button Reserve;
     @FXML
     private ListView<Ride>RegisteredRides;
+    @FXML
+    private ListView<Ride> RecommendedRides;
 
 
 
@@ -52,12 +54,6 @@ public class ProfileCotroller {
     private Label Mail;
     @FXML
     private Label Location;
-    @FXML
-    private Button ChangeRole;
-    @FXML
-    private Button SignOut;
-    @FXML
-    private Button Out;
 
     Ride ride;
     private RidesDataBase RideDB;
@@ -92,6 +88,7 @@ public class ProfileCotroller {
             controller.initDriverProfile();
             Scene scene = new Scene(root);
             Stage stage = new Stage();
+            controller.setCurrentStage(stage);
             stage.setScene(scene);
             stage.show();
         }
@@ -153,6 +150,7 @@ public class ProfileCotroller {
             controller.setPassenger(passenger);
             controller.initPassengerProfile();
             controller.loadReservedPassengerRides();
+            controller.loadRecommendedRides();
             Scene scene = new Scene(root);
             Stage stage = new Stage();
             controller.setCurrentStage(stage);
@@ -184,12 +182,6 @@ public class ProfileCotroller {
         }
     }
     public void SearchUI(){}
-
-
-
-
-
-
 
     //initialize UI
     public void loadDriverRidesToListView() {
@@ -240,23 +232,32 @@ public class ProfileCotroller {
             });
         }
     }
-    public void LoginUI(){
-        try {
-            FXMLLoader loader = new FXMLLoader(
-                    new File("C:\\Users\\watanimall\\IdeaProjects\\CollegeProject\\Project\\UI\\lLoginUI.fxml")
-                            .toURI().toURL()
-            );
-            Parent root = loader.load();
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
-            stage.setScene(scene);
-            stage.show();
-        }
-        catch (IOException e) {
-            e.printStackTrace();
+
+    public void loadRecommendedRides() {
+        if (passenger != null) {
+            RidesDataBase rideDB = new RidesDataBase(passenger);
+            List<Ride> recommendedRides = rideDB.getRecommendedRides(passenger);
+
+            ObservableList<Ride> observableRides = FXCollections.observableArrayList(recommendedRides);
+            RecommendedRides.setItems(observableRides);
+            RecommendedRides.setCellFactory(param -> new ListCell<Ride>() {
+                @Override
+                protected void updateItem(Ride ride, boolean empty) {
+                    super.updateItem(ride, empty);
+                    if (empty || ride == null) {
+                        setText(null);
+                    } else {
+                        setText(
+                                ride.getLocation() + " ➡ " + ride.getDestination() +
+                                        " 🕐 " + ride.getHour() +
+                                        " 📅 " + ride.getDateAndDay() +
+                                        " 👥 " + ride.getSeats() + " seats"
+                        );
+                    }
+                }
+            });
         }
     }
-
 
 
     public void initDriverProfile() {

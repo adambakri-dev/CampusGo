@@ -20,19 +20,21 @@ public class ChooseRoleController {
     private Button Driver;
     @FXML
     private Button Passenger;
-    // This Class It is responsible to transfer a Student to Driver or Passenger as he want.
-    private UserDatabase userDB;//This is a CSV DataBase that conatain all information about all signed-in users.
+
+    private UserDatabase userDB;
     private Stage currentStage;
 
     public void setCurrentStage(Stage stage) {
         this.currentStage = stage;
     }
+
     public void setStudent(Student student) {
         this.student = student;
     }
+
     public ChooseRoleController() {}
 
-    public void ChooseRoleUI(){
+    public void ChooseRoleUI() {
         try {
             FXMLLoader loader = new FXMLLoader(
                     new File("C:\\Users\\watanimall\\IdeaProjects\\CollegeProject\\Project\\UI\\ChooseRoleUI.fxml")
@@ -47,70 +49,79 @@ public class ChooseRoleController {
             stage.setScene(scene);
             stage.setTitle("CampusGo Choose Role");
             stage.show();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void DriverRole(){
-        String id=student.getId();
-        userDB=new UserDatabase();
+    public void DriverRole() {
+        String id = student.getId();
+        userDB = new UserDatabase();
         Driver driver = userDB.getDriverById(id);
-        if (driver==null){
-            System.out.println("you are not a driver");
-            ToDriverRole toDriverRole=new ToDriverRole();
+        Passenger passenger = userDB.getPassengerById(id);
+
+        if (driver == null && passenger == null) {
+            System.out.println("you are not registered as driver");
+            ToDriverRole toDriverRole = new ToDriverRole();
             toDriverRole.setStudent(student);
             toDriverRole.ToDriverUI();
-        }else {
-            System.out.println("you are a driver");
-            userDB.updateUser(driver);
-            GoToDriverProfile(driver);
-        }
-    }
-
-    public void PassengerRole(){
-        String id=student.getId();
-        userDB=new UserDatabase();
-        Passenger passenger=userDB.getPassengerById(id);
-        Driver driver = userDB.getDriverById(id);
-        if (passenger==null && driver==null){
-            System.out.println("you are not passenger");
-            ToPassengerRole toPassengerRole=new ToPassengerRole();
-            toPassengerRole.setStudent(student);
-            toPassengerRole.ToPassengerRoleUI();
-        }else {
-            if (passenger!=null){
-                System.out.println("you are passenger");
-                userDB.updateUser(passenger);
-                GoToPassengerProfile(passenger);
-            }else if (driver!=null){
-                Project.Users.Passenger passenger1=new Passenger(driver.getMajor(), driver.getYear(), student);
-                System.out.println("you was a driver and now you are passenger");
-                userDB.updateUser(passenger1);
-                GoToPassengerProfile(passenger1);
+        } else {
+            if (driver != null) {
+                System.out.println("you are a driver");
+                GoToDriverProfile(driver);
+            } else if (passenger != null) {
+                Driver newDriver = new Driver(4, "CarModel", student, passenger.getMajor(), passenger.getYears());
+                System.out.println("you were a passenger and now also a driver");
+                userDB.addDriver(newDriver); // أضف إلى قاعدة البيانات
+                GoToDriverProfile(newDriver);
             }
         }
     }
 
-    public void GoToDriverProfile(Driver driver){
+    public void PassengerRole() {
+        String id = student.getId();
+        userDB = new UserDatabase();
+        Passenger passenger = userDB.getPassengerById(id);
+        Driver driver = userDB.getDriverById(id);
+
+        if (passenger == null && driver == null) {
+            System.out.println("you are not registered as passenger");
+            ToPassengerRole toPassengerRole = new ToPassengerRole();
+            toPassengerRole.setStudent(student);
+            toPassengerRole.ToPassengerRoleUI();
+        } else {
+            if (passenger != null) {
+                System.out.println("you are a passenger");
+                GoToPassengerProfile(passenger);
+            } else if (driver != null) {
+                Passenger newPassenger = new Passenger(driver.getMajor(), driver.getYear(), student);
+                System.out.println("you were a driver and now also a passenger");
+                userDB.addPassenger(newPassenger); // أضف إلى قاعدة البيانات
+                GoToPassengerProfile(newPassenger);
+            }
+        }
+    }
+
+    public void GoToDriverProfile(Driver driver) {
         if (currentStage != null) {
             currentStage.close();
         }
-        ProfileCotroller profileCotroller=new ProfileCotroller();
+        ProfileCotroller profileCotroller = new ProfileCotroller();
         profileCotroller.setDriver(driver);
         profileCotroller.setStudent(student);
         profileCotroller.DriverProfileUI();
     }
-    public void GoToPassengerProfile(Passenger passenger){
+
+    public void GoToPassengerProfile(Passenger passenger) {
         if (currentStage != null) {
             currentStage.close();
         }
-        ProfileCotroller profileCotroller=new ProfileCotroller();
+        ProfileCotroller profileCotroller = new ProfileCotroller();
         profileCotroller.setStudent(student);
         profileCotroller.setPassenger(passenger);
         profileCotroller.PassengerProfileUI();
     }
+
     public static void showNotice(String message) {
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
@@ -120,7 +131,7 @@ public class ChooseRoleController {
         Label label = new Label(message);
         label.setStyle("-fx-font-size: 14px; -fx-text-fill: #1d1a8f;");
 
-        Button closeButton = new Button("OK" );
+        Button closeButton = new Button("OK");
         closeButton.setStyle("-fx-background-color: #ffbb00; -fx-text-fill: black; -fx-background-radius: 10;");
         closeButton.setOnAction(e -> window.close());
 

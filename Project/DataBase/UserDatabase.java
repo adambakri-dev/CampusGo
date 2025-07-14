@@ -177,7 +177,7 @@ public class UserDatabase {
             String line;
             while ((line = br.readLine()) != null) {
                 if (line.startsWith(driver.getId() + ",")) {
-                    return false; // موجود مسبقًا
+                    return false;
                 }
             }
         } catch (IOException e) {
