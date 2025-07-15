@@ -102,6 +102,27 @@ public class SearchController implements Initializable {
         });
     }
 
+    public void reserveSelectedRide() {
+        Ride selectedRide = RideList.getSelectionModel().getSelectedItem();
+
+        if (selectedRide != null && passenger != null) {
+            // احجز الرحلة في ملف CSV
+            RidesDataBase rideDB = new RidesDataBase(passenger);
+            rideDB.reserveRideForPassenger(selectedRide, passenger);
+
+            // تحديث قائمة الرحلات المحجوزة
+            profileController.loadReservedPassengerRides();
+            // تحديث قائمة الرحلات المقترحة بحذف الرحلة المحجوزة
+            ObservableList<Ride> RidesList = RideList.getItems();
+            RidesList.remove(selectedRide);
+            RideList.setItems(RidesList);
+
+            System.out.println("✅ Ride reserved and removed from recommended list.");
+        } else {
+            System.out.println("❌ No ride selected or passenger is null.");
+        }
+    }
+
     private void initPassengerInfo() {
         if (passenger != null) {
             Name.setText(passenger.getName());

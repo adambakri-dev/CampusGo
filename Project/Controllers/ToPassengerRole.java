@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -15,11 +16,12 @@ import java.io.IOException;
 
 public class ToPassengerRole {
     @FXML
-    private javafx.scene.control.TextField Years;
+    private TextField Years;
     @FXML
-    private javafx.scene.control.TextField Major;
+    private TextField Major;
     private Student student;
     private UserDatabase userDB;
+
     private Stage currentStage;
     public ToPassengerRole(){}
     public void setStudent(Student student) {
@@ -67,6 +69,5 @@ public class ToPassengerRole {
             profileCotroller.PassengerProfileUI();
             currentStage.close();
         }
-
     }
 }

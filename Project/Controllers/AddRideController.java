@@ -30,13 +30,10 @@ public class AddRideController implements Initializable {
 
     @FXML
     private Spinner<String> HourPicker;
-
     @FXML
     private DatePicker DatePicker;
-
     @FXML
     private Button AddRideButton;
-
     @FXML
     private Label Name;
     @FXML

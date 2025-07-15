@@ -35,6 +35,8 @@ public class ProfileCotroller {
 
     //Passenger UI
     @FXML
+    private Button RemoveRideButton;
+    @FXML
     private Button Search;
     @FXML
     private Button Reserve;
@@ -181,6 +183,59 @@ public class ProfileCotroller {
             e.printStackTrace();
         }
     }
+    public void removeSelectedRide() {
+        Ride selectedRide = RegisteredRides.getSelectionModel().getSelectedItem();
+
+        if (selectedRide != null && passenger != null) {
+            RidesDataBase rideDB = new RidesDataBase(passenger);
+
+            // 1. إزالة الرحلة من CSV
+            rideDB.removePassengerFromRide(selectedRide, passenger);
+            System.out.println("✅ Ride removed successfully from registered rides.");
+
+            // 2. تحديث قائمة المحجوزة
+            loadReservedPassengerRides();
+
+            // 3. التحقق مما إذا كانت الرحلة مناسبة كرحلة مقترحة
+            boolean isSuitable = selectedRide.getLocation().equalsIgnoreCase(passenger.getLocation()) &&
+                    selectedRide.getDestination().equalsIgnoreCase(passenger.getCollege());
+
+            if (isSuitable) {
+                ObservableList<Ride> recommendedList = RecommendedRides.getItems();
+                if (!recommendedList.contains(selectedRide)) {
+                    recommendedList.add(selectedRide);
+                    RecommendedRides.setItems(recommendedList);
+                    System.out.println("✅ Ride added to recommended rides.");
+                }
+            }
+
+        } else {
+            System.out.println("❌ No ride selected or passenger is null.");
+        }
+    }
+
+
+    @FXML
+    public void reserveSelectedRide() {
+        Ride selectedRide = RecommendedRides.getSelectionModel().getSelectedItem();
+
+        if (selectedRide != null && passenger != null) {
+            // احجز الرحلة في ملف CSV
+            RidesDataBase rideDB = new RidesDataBase(passenger);
+            rideDB.reserveRideForPassenger(selectedRide, passenger);
+
+            // تحديث قائمة الرحلات المحجوزة
+            loadReservedPassengerRides();
+            ObservableList<Ride> recommendedList = RecommendedRides.getItems();
+            recommendedList.remove(selectedRide);
+            RecommendedRides.setItems(recommendedList);
+
+            System.out.println("✅ Ride reserved and removed from recommended list.");
+        } else {
+            System.out.println("❌ No ride selected or passenger is null.");
+        }
+    }
+
     public void SearchUI(){}
 
     //initialize UI

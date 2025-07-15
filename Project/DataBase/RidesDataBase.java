@@ -70,6 +70,7 @@ public class RidesDataBase {
         System.out.println("✅ Ride deleted successfully from CSV.");
     }
 
+    //=============Passenger================
     public List<Ride> searchRides(String location, String destination, String hour, String dateAndDay) {
         List<Ride> matchedRides = new ArrayList<>();
         for (Ride ride : rides) {
@@ -122,12 +123,11 @@ public class RidesDataBase {
     public List<Ride> getRecommendedRides(Passenger passenger) {
         List<Ride> recommendedRides = new ArrayList<>();
 
-        // الرحلات التي حجزها الراكب مسبقًا
         Set<String> reservedKeys = new HashSet<>();
         File reservedFile = new File("passenger_rides.csv");
         if (reservedFile.exists()) {
             try (BufferedReader reader = new BufferedReader(new FileReader(reservedFile))) {
-                reader.readLine(); // تخطي العنوان
+                reader.readLine();
                 String line;
                 while ((line = reader.readLine()) != null) {
                     String[] parts = line.split(",", -1);
@@ -149,7 +149,6 @@ public class RidesDataBase {
             }
         }
 
-        // قراءة الرحلات المتاحة من rides.csv
         File rideFile = new File("rides.csv");
         if (!rideFile.exists()) {
             System.out.println("📂 rides.csv not found.");
@@ -192,6 +191,129 @@ public class RidesDataBase {
 
         return recommendedRides;
     }
+
+    public void removePassengerFromRide(Ride ride, Passenger passenger) {
+        File inputFile = new File("C:\\Users\\watanimall\\IdeaProjects\\CollegeProject\\passenger_rides.csv");
+        File tempFile = new File("C:\\Users\\watanimall\\IdeaProjects\\CollegeProject\\passenger_rides_temp.csv");
+
+        try (
+                BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+                BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))
+        ) {
+            String currentLine;
+            boolean removed = false;
+
+            // انسخ الرأس أولاً
+            String header = reader.readLine();
+            if (header != null) {
+                writer.write(header);
+                writer.newLine();
+            }
+
+            while ((currentLine = reader.readLine()) != null) {
+                String[] parts = currentLine.split(",", -1);
+                if (parts.length < 6) continue;
+
+                String passengerName = parts[0];
+                String driverName = parts[1];
+                String location = parts[2];
+                String destination = parts[3];
+                String hour = parts[4];
+                String dateAndDay = parts[5];
+
+                // تطابق تام لكل تفاصيل الرحلة والراكب
+                if (passenger.getName().equals(passengerName) &&
+                        ride.getDriverName().equals(driverName) &&
+                        ride.getLocation().equals(location) &&
+                        ride.getDestination().equals(destination) &&
+                        ride.getHour().equals(hour) &&
+                        ride.getDateAndDay().equals(dateAndDay)) {
+                    removed = true; // لا تكتب هذا السطر
+                    continue;
+                }
+
+                writer.write(currentLine);
+                writer.newLine();
+            }
+
+            if (removed) {
+                System.out.println("✅ Passenger ride removed from CSV.");
+            } else {
+                System.out.println("❌ Ride not found or already removed.");
+            }
+
+        } catch (IOException e) {
+            System.out.println("❌ Error while removing passenger ride: " + e.getMessage());
+            return;
+        }
+
+        // استبدال الملف الأصلي بالملف المؤقت
+        if (inputFile.delete()) {
+            if (tempFile.renameTo(inputFile)) {
+                System.out.println("📁 CSV updated successfully.");
+            } else {
+                System.out.println("❌ Failed to rename temp file.");
+            }
+        } else {
+            System.out.println("❌ Failed to delete original CSV file.");
+        }
+    }
+
+    public void reserveRideForPassenger(Ride ride, Passenger passenger) {
+        File file = new File("C:\\Users\\watanimall\\IdeaProjects\\CollegeProject\\passenger_rides.csv");
+        boolean alreadyReserved = false;
+
+        // تحقق من أن الرحلة لم يتم حجزها مسبقًا
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line = reader.readLine(); // Skip header
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",", -1);
+                if (parts.length < 6) continue;
+
+                String passengerName = parts[0];
+                String driverName = parts[1];
+                String location = parts[2];
+                String destination = parts[3];
+                String hour = parts[4];
+                String dateAndDay = parts[5];
+
+                if (passenger.getName().equals(passengerName) &&
+                        ride.getDriverName().equals(driverName) &&
+                        ride.getLocation().equals(location) &&
+                        ride.getDestination().equals(destination) &&
+                        ride.getHour().equals(hour) &&
+                        ride.getDateAndDay().equals(dateAndDay)) {
+                    alreadyReserved = true;
+                    break;
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("❌ Error while checking reservations: " + e.getMessage());
+            return;
+        }
+
+        if (alreadyReserved) {
+            System.out.println("⚠️ Ride already reserved by this passenger.");
+            return;
+        }
+
+        // أضف الحجز إلى CSV
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) {
+            String newLine = passenger.getName() + "," +
+                    ride.getDriverName() + "," +
+                    ride.getLocation() + "," +
+                    ride.getDestination() + "," +
+                    ride.getHour() + "," +
+                    ride.getDateAndDay();
+            writer.newLine(); // Start from a new line
+            writer.write(newLine);
+            System.out.println("✅ Ride reserved successfully.");
+        } catch (IOException e) {
+            System.out.println("❌ Error while writing to passenger_rides.csv: " + e.getMessage());
+        }
+    }
+
+
 
 
 
