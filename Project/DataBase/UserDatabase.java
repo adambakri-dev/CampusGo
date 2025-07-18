@@ -3,12 +3,11 @@ package Project.DataBase;
 import Project.Users.Student;
 import Project.Users.Driver;
 import Project.Users.Passenger;
-
 import java.io.*;
 import java.util.*;
 
 public class UserDatabase {
-    private HashMap<String, Student> DB = new HashMap<>();
+    private HashMap <String , Student> DB = new HashMap<>();
 
     public UserDatabase() {
         //get users from file.
@@ -53,57 +52,17 @@ public class UserDatabase {
         return DB.containsKey(id);//this will check if the id in database
     }
 
-    public boolean updateUser(Student updatedUser) {
-        if (!DB.containsKey(updatedUser.getId())) {//this will update the user according to his role.
-            return false;
-        }
-        DB.put(updatedUser.getId(), updatedUser);
-        saveToFile();
-        return true;
-    }
-
-    public String[] getUserDataById(String id) {//we will get all user data by his id.
-        String filePath = "Students.csv";
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] parts = line.split(",");
-                if (parts.length > 1 && parts[1].equals(id)) {
-                    return parts;
-                }
-            }
-        } catch (IOException e) {
-            System.out.println("Error reading users file: " + e.getMessage());
-        }
-        return null;
-    }
+//    public boolean updateUser(Student updatedUser) {
+//        if (!DB.containsKey(updatedUser.getId())) {//this will update the user according to his role.
+//            return false;
+//        }
+//        DB.put(updatedUser.getId(), updatedUser);
+//        saveToFile();
+//        return true;
+//    }
 
     private void saveToFile() {
         saveUsersToCSV(getAllStudents());
-    }
-
-    public Student getStudentById(String id) {
-        try (BufferedReader br = new BufferedReader(new FileReader("Students.csv"))) {
-            String line = br.readLine(); // تخطي العنوان
-            while ((line = br.readLine()) != null) {
-                String[] parts = line.split(",", -1);
-                if (parts.length >= 7 && parts[0].equals(id)) {
-                    // ترتيب: ID,Name,Password,Email,College,Gender,Location
-                    return new Student(
-                            parts[0], // ID
-                            parts[1], // Name
-                            parts[2], // Password
-                            parts[3], // Email
-                            parts[4], // College
-                            parts[5], // Gender
-                            parts[6]  // Location
-                    );
-                }
-            }
-        } catch (IOException e) {
-            System.out.println("Error reading Students.csv: " + e.getMessage());
-        }
-        return null;
     }
 
     public Driver getDriverById(String id) {
@@ -147,19 +106,17 @@ public class UserDatabase {
     }
 
     public boolean addPassenger(Passenger passenger) {
-        // تحقق إذا كان موجودًا بالفعل في قاعدة بيانات الركّاب
         try (BufferedReader br = new BufferedReader(new FileReader("PassengerDataBase.csv"))) {
             String line;
             while ((line = br.readLine()) != null) {
                 if (line.startsWith(passenger.getId() + ",")) {
-                    return false; // موجود مسبقًا
+                    return false;
                 }
             }
         } catch (IOException e) {
             System.out.println("Error checking existing passengers: " + e.getMessage());
         }
 
-        // أضفه إلى قاعدة البيانات
         try (FileWriter writer = new FileWriter("PassengerDataBase.csv", true)) {
             writer.append(String.join(",", passenger.getId(), passenger.getName(), passenger.getPassword(),
                     passenger.getEmail(), passenger.getCollege(), passenger.getGender(), passenger.getLocation(),
@@ -172,7 +129,6 @@ public class UserDatabase {
     }
 
     public boolean addDriver(Driver driver) {
-        // نفس المنطق المستخدم في addPassenger
         try (BufferedReader br = new BufferedReader(new FileReader("DriverDataBase.csv"))) {
             String line;
             while ((line = br.readLine()) != null) {

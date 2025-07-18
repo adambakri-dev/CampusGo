@@ -9,7 +9,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-
 public class LoginController {
     // this class will take information and data from user to check and make him sign in and after that he will go to ChooseRoleController or other according to his status in database.
     private UserDatabase userDB;//This is a CSV DataBase that contain all information about all signed-in users.
@@ -28,7 +27,6 @@ public class LoginController {
     private TextField IdField;
 
     public void Login() {
-
         String userId = IdField.getText().trim();
         String password = PassField.getText().trim();
         if (userId.isEmpty() || password.isEmpty()) {

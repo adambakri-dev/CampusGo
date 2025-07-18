@@ -9,7 +9,6 @@ public class Passenger extends Student {
                 student.getEmail(), student.getCollege(), student.getGender() , student.getLocation());
         this.major=major;
         this.years=years;
-
     }
 
     //Getters

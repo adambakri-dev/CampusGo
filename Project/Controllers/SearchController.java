@@ -104,19 +104,13 @@ public class SearchController implements Initializable {
 
     public void reserveSelectedRide() {
         Ride selectedRide = RideList.getSelectionModel().getSelectedItem();
-
         if (selectedRide != null && passenger != null) {
-            // احجز الرحلة في ملف CSV
             RidesDataBase rideDB = new RidesDataBase(passenger);
             rideDB.reserveRideForPassenger(selectedRide, passenger);
-
-            // تحديث قائمة الرحلات المحجوزة
             profileController.loadReservedPassengerRides();
-            // تحديث قائمة الرحلات المقترحة بحذف الرحلة المحجوزة
             ObservableList<Ride> RidesList = RideList.getItems();
             RidesList.remove(selectedRide);
             RideList.setItems(RidesList);
-
             System.out.println("✅ Ride reserved and removed from recommended list.");
         } else {
             System.out.println("❌ No ride selected or passenger is null.");
@@ -148,9 +142,22 @@ public class SearchController implements Initializable {
             @Override
             public void updateItem(LocalDate date, boolean empty) {
                 super.updateItem(date, empty);
-                if (date.isBefore(LocalDate.now())) {
+
+                LocalDate today = LocalDate.now();
+
+                if (date.isBefore(today)) {
                     setDisable(true);
                     setStyle("-fx-background-color: #ffc0cb;");
+                }
+
+                if (date.getDayOfWeek() == java.time.DayOfWeek.SATURDAY) {
+                    setDisable(true);
+                    setStyle("-fx-background-color: #add8e6;");
+                }
+
+                if (date.isEqual(today)) {
+                    setDisable(true);
+                    setStyle("-fx-background-color: #ffdead;");
                 }
             }
         });

@@ -14,6 +14,9 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 
 import java.io.File;
@@ -118,26 +121,7 @@ public class ProfileCotroller {
         }
     }
 
-    public void DeleteRideUI(){
-        try {
-            FXMLLoader loader = new FXMLLoader(
-                    new File("C:\\Users\\watanimall\\IdeaProjects\\CollegeProject\\Project\\UI\\DeleteRideUI.fxml")
-                            .toURI().toURL()
-            );
-            Parent root = loader.load();
-            Scene scene = new Scene(root);
-            DeleteRideController controller = loader.getController();
-            controller.setDriver(driver);
-            controller.setProfileController(this);
-            Stage stage = new Stage();
-            stage.setScene(scene);
-            stage.show();
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-        
-    }
+
 
     // PassengerUI
     public void PassengerProfileUI(){
@@ -189,14 +173,11 @@ public class ProfileCotroller {
         if (selectedRide != null && passenger != null) {
             RidesDataBase rideDB = new RidesDataBase(passenger);
 
-            // 1. إزالة الرحلة من CSV
             rideDB.removePassengerFromRide(selectedRide, passenger);
             System.out.println("✅ Ride removed successfully from registered rides.");
 
-            // 2. تحديث قائمة المحجوزة
             loadReservedPassengerRides();
 
-            // 3. التحقق مما إذا كانت الرحلة مناسبة كرحلة مقترحة
             boolean isSuitable = selectedRide.getLocation().equalsIgnoreCase(passenger.getLocation()) &&
                     selectedRide.getDestination().equalsIgnoreCase(passenger.getCollege());
 
@@ -242,8 +223,11 @@ public class ProfileCotroller {
     public void loadDriverRidesToListView() {
         if (driver != null) {
             RidesDataBase rideDB = new RidesDataBase(driver);
-            List<Ride> driverRides = rideDB.getRidesByDriver(driver.getName());
-            ObservableList<Ride> observableRides = FXCollections.observableArrayList(driverRides);
+            List<Ride> driverRides = rideDB.getRidesByDriver(driver.getId());
+
+            List<Ride> filteredRides = filterFutureRides(driverRides);
+
+            ObservableList<Ride> observableRides = FXCollections.observableArrayList(filteredRides);
             RidesList.setItems(observableRides);
             RidesList.setCellFactory(param -> new ListCell<Ride>() {
                 @Override
@@ -252,7 +236,7 @@ public class ProfileCotroller {
                     if (empty || ride == null) {
                         setText(null);
                     } else {
-                        setText( ride.getLocation() +
+                        setText(ride.getLocation() +
                                 " ➡ " + ride.getDestination() +
                                 " 🕐 " + ride.getHour() +
                                 " 📅 " + ride.getDateAndDay() +
@@ -262,12 +246,28 @@ public class ProfileCotroller {
             });
         }
     }
+    @FXML
+    private void handleDeleteRide() {
+        RidesDataBase rideDB=new RidesDataBase(driver);
+        Ride selectedRide = RidesList.getSelectionModel().getSelectedItem();
+        if (selectedRide != null) {
+            int index = RidesList.getSelectionModel().getSelectedIndex();
+            rideDB.deleteMyRide(driver.getId(), index);
+            loadDriverRidesToListView();
+            System.out.println("✅ Ride has been deleted successfully.");
+        } else {
+            System.out.println("❌ Please select a ride to delete.");
+        }
+    }
 
     public void loadReservedPassengerRides() {
         if (passenger != null) {
             RidesDataBase rideDB = new RidesDataBase(passenger);
             List<Ride> registeredRides = rideDB.getRegisteredRidesForPassenger(passenger);
-            ObservableList<Ride> observableRides = FXCollections.observableArrayList(registeredRides);
+
+            List<Ride> filteredRides = filterFutureRides(registeredRides);
+
+            ObservableList<Ride> observableRides = FXCollections.observableArrayList(filteredRides);
             RegisteredRides.setItems(observableRides);
             RegisteredRides.setCellFactory(param -> new ListCell<Ride>() {
                 @Override
@@ -276,12 +276,10 @@ public class ProfileCotroller {
                     if (empty || ride == null) {
                         setText(null);
                     } else {
-                        setText(
-                                ride.getLocation() + " ➡ " + ride.getDestination() +
-                                        " 🕐 " + ride.getHour() +
-                                        " 📅 " + ride.getDateAndDay() +
-                                        " 👥 " + ride.getSeats() + " seats"
-                        );
+                        setText(ride.getLocation() + " ➡ " + ride.getDestination() +
+                                " 🕐 " + ride.getHour() +
+                                " 📅 " + ride.getDateAndDay() +
+                                " 👥 " + ride.getSeats() + " seats");
                     }
                 }
             });
@@ -293,7 +291,9 @@ public class ProfileCotroller {
             RidesDataBase rideDB = new RidesDataBase(passenger);
             List<Ride> recommendedRides = rideDB.getRecommendedRides(passenger);
 
-            ObservableList<Ride> observableRides = FXCollections.observableArrayList(recommendedRides);
+            List<Ride> filteredRides = filterFutureRides(recommendedRides);
+
+            ObservableList<Ride> observableRides = FXCollections.observableArrayList(filteredRides);
             RecommendedRides.setItems(observableRides);
             RecommendedRides.setCellFactory(param -> new ListCell<Ride>() {
                 @Override
@@ -302,16 +302,40 @@ public class ProfileCotroller {
                     if (empty || ride == null) {
                         setText(null);
                     } else {
-                        setText(
-                                ride.getLocation() + " ➡ " + ride.getDestination() +
-                                        " 🕐 " + ride.getHour() +
-                                        " 📅 " + ride.getDateAndDay() +
-                                        " 👥 " + ride.getSeats() + " seats"
-                        );
+                        setText(ride.getLocation() + " ➡ " + ride.getDestination() +
+                                " 🕐 " + ride.getHour() +
+                                " 📅 " + ride.getDateAndDay() +
+                                " 👥 " + ride.getSeats() + " seats");
                     }
                 }
             });
         }
+    }
+
+    // دالة مساعدة لإعادة استخدام فلترة الرحلات
+    private List<Ride> filterFutureRides(List<Ride> rides) {
+        List<Ride> filtered = new ArrayList<>();
+        LocalDate today = LocalDate.now();
+        LocalTime now = LocalTime.now();
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+
+        for (Ride ride : rides) {
+            try {
+                String[] dateParts = ride.getDateAndDay().split(" ");
+                if (dateParts.length < 2) continue;
+
+                LocalDate rideDate = LocalDate.parse(dateParts[1]);
+                LocalTime rideTime = LocalTime.parse(ride.getHour(), timeFormatter);
+
+                if (rideDate.isAfter(today) || (rideDate.isEqual(today) && rideTime.isAfter(now))) {
+                    filtered.add(ride);
+                }
+            } catch (Exception e) {
+                System.out.println("Error parsing date/time for ride: " + e.getMessage());
+            }
+        }
+
+        return filtered;
     }
 
 
@@ -334,4 +358,3 @@ public class ProfileCotroller {
     }
 
 }
-

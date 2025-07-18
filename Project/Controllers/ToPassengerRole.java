@@ -61,7 +61,8 @@ public class ToPassengerRole {
         }else {
             Passenger passenger=new Passenger(major,year,student);
             this.userDB=new UserDatabase();
-            userDB.updateUser(passenger);
+            userDB.addPassenger(passenger);
+//            userDB.updateUser(passenger);
             System.out.println("become a passenger success");
             ProfileCotroller profileCotroller=new ProfileCotroller();
             profileCotroller.setPassenger(passenger);

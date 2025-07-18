@@ -62,7 +62,7 @@
                         <DropShadow />
                      </effect>
                   </Button>
-                  <Button fx:id="DeleteRide" contentDisplay="CENTER" mnemonicParsing="false" onAction="#DeleteRideUI" prefHeight="20.0" prefWidth="90.0" style="-fx-background-radius: 20; -fx-background-color: #ffbb00;" text="Delete Ride" textAlignment="CENTER">
+                  <Button fx:id="DeleteRide"  contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleDeleteRide" prefHeight="20.0" prefWidth="90.0" style="-fx-background-radius: 20; -fx-background-color: #ffbb00;" text="Delete Ride" textAlignment="CENTER">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
