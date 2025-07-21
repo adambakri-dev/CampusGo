@@ -1,4 +1,5 @@
 package Project.Controllers;
+import Project.Utils.Pass_Check;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
@@ -69,6 +70,7 @@ public class RegisterController {
 
     //This function will take an info about new user to save it in DataBase
     public void Register() {
+        Pass_Check PasswordChecker=new Pass_Check();
         String userId = ID.getText().trim();
         String username= Username.getText().trim();
         String password=Password.getText().trim();
@@ -76,17 +78,23 @@ public class RegisterController {
         String Code=code.getText().trim();
         String location= Location.getText().trim();
         String college=College.getText().trim();
+        boolean UserNameCheck=username.length()>5&&username.length()<20;
+        boolean IdCheck=userId.length()>1&&userId.length()<= 9;
         this.userDB=new UserDatabase();
         if (userId.isEmpty()&&username.isEmpty()&&password.isEmpty()&&Mail.isEmpty()&&Code.isEmpty()&&location.isEmpty()&&college.isEmpty()){
+            if (UserNameCheck==false){
+                showNotice("Invalid UserName");
+            }
+            if (IdCheck==false){
+                showNotice("Invalid ID");
+            }
             showNotice("Register Failed");
         }else {
-            if (register(userId,username,password,Mail,college,getSelectedGender(),location)){
+            if (register(userId,username,password,Mail,college,getSelectedGender(),location) && PasswordChecker.IsValid(password)&&UserNameCheck&&IdCheck){
                 showNotice("register success");
             }else {
                 showNotice("register failed");
             }
-
-
         }
     }
 
@@ -104,7 +112,6 @@ public class RegisterController {
         }
         return null;
     }
-
 
     public boolean register(String id, String name, String password, String email, String college, String gender,String location) {
         if (userDB.userExists(id)) {
