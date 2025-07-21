@@ -73,7 +73,7 @@ public class ChooseRoleController {
                 Driver newDriver = new Driver(4, "CarModel", student, passenger.getMajor(), passenger.getYears());
                 System.out.println("you were a passenger and now also a driver");
 //                userDB.updateUser(newDriver);
-                userDB.addDriver(newDriver); // أضف إلى قاعدة البيانات
+                userDB.addDriver(newDriver);
                 GoToDriverProfile(newDriver);
             }
         }
@@ -98,7 +98,7 @@ public class ChooseRoleController {
                 Passenger newPassenger = new Passenger(driver.getMajor(), driver.getYear(), student);
                 System.out.println("you were a driver and now also a passenger");
 //                userDB.updateUser(newPassenger);
-                userDB.addPassenger(newPassenger); // أضف إلى قاعدة البيانات
+                userDB.addPassenger(newPassenger);
                 GoToPassengerProfile(newPassenger);
             }
         }

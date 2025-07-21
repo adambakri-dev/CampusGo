@@ -27,7 +27,9 @@ public class RidesDataBase {
         loadRidesFromCSV();
     }
 
-    // إضافة رحلة
+
+    //========================Driver Operations =================
+    //-----------Add Ride-----------------
     public void addRide(int seats, Driver driver, String location, String destination, String hour, String dateAndDay) {
         Ride ride = new Ride(seats, driver, location, destination, hour, dateAndDay);
         rides.add(ride);
@@ -35,7 +37,8 @@ public class RidesDataBase {
         System.out.println("✅ Ride added successfully!");
     }
 
-    // حذف رحلة حسب ID السائق والموقع
+    //-----------Delete Ride-----------------
+
     public void deleteMyRide(String driverID, int indexToDelete) {
         int driverRideIndex = 0;
         List<Ride> updatedRides = new ArrayList<>();
@@ -54,6 +57,8 @@ public class RidesDataBase {
         System.out.println("✅ Ride deleted successfully from CSV.");
     }
 
+    //=====================Passenger Operations================
+    //------search ride----------
     public List<Ride> searchRides(String location, String destination, String hour, String dateAndDay) {
         List<Ride> matchedRides = new ArrayList<>();
         for (Ride ride : rides) {
@@ -66,7 +71,7 @@ public class RidesDataBase {
         }
         return matchedRides;
     }
-
+    //------get registered rides for passenger------
     public List<Ride> getRegisteredRidesForPassenger(Passenger passenger) {
         List<Ride> registeredRides = new ArrayList<>();
         File file = new File(passengerRidesFile);
@@ -98,11 +103,10 @@ public class RidesDataBase {
         }
         return registeredRides;
     }
-
+    //------------get recommended rides -----------------
     public List<Ride> getRecommendedRides(Passenger passenger) {
         List<Ride> recommended = new ArrayList<>();
-        Set<String> reservedKeys = new HashSet<>();
-
+        Set<String> RegisteredRides = new HashSet<>();
         File file = new File(passengerRidesFile);
         if (file.exists()) {
             try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
@@ -113,7 +117,7 @@ public class RidesDataBase {
                     if (parts.length < 7) continue;
                     if (parts[0].equalsIgnoreCase(passenger.getName())) {
                         String key = parts[1] + parts[3] + parts[4] + parts[5] + parts[6];
-                        reservedKeys.add(key);
+                        RegisteredRides.add(key);
                     }
                 }
             } catch (IOException e) {
@@ -124,15 +128,14 @@ public class RidesDataBase {
         for (Ride ride : rides) {
             String key = ride.getDriver().getId() + ride.getLocation() + ride.getDestination() +
                     ride.getHour() + ride.getDateAndDay();
-            if (!reservedKeys.contains(key) &&
-                    ride.getLocation().equalsIgnoreCase(passenger.getLocation()) &&
-                    ride.getDestination().equalsIgnoreCase(passenger.getCollege())) {
+            if (!RegisteredRides.contains(key) && ride.getLocation().equalsIgnoreCase(passenger.getLocation()) && ride.getDestination().equalsIgnoreCase(passenger.getCollege())) {
                 recommended.add(ride);
             }
         }
         return recommended;
     }
 
+    //----------remove passenger from ride-------------
     public void removePassengerFromRide(Ride ride, Passenger passenger) {
         File inputFile = new File(passengerRidesFile);
         File tempFile = new File("passenger_rides_temp.csv");
@@ -173,7 +176,7 @@ public class RidesDataBase {
         inputFile.delete();
         tempFile.renameTo(inputFile);
     }
-
+    //----reserved ride for passenger
     public void reserveRideForPassenger(Ride ride, Passenger passenger) {
         File file = new File(passengerRidesFile);
         boolean alreadyReserved = false;

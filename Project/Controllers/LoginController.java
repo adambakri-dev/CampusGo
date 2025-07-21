@@ -33,7 +33,7 @@ public class LoginController {
             showNotice("Please fill in both fields.");
             return;
         }
-        Student student = login(userId, password);
+        Student student = LoginChecker(userId, password);
         if (student == null) {
             showNotice("Login Failed: Incorrect ID or password.");
         } else {
@@ -43,7 +43,7 @@ public class LoginController {
     }
 
     //this will check if he did login before or not and will handle with it according to a situation.
-    public Student login(String id, String password ) {
+    public Student LoginChecker(String id, String password ) {
         this.userDB=new UserDatabase();
         return userDB.login(id, password);
     }

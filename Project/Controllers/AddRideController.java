@@ -1,15 +1,14 @@
 package Project.Controllers;
 
-import java.net.URL;
+
+import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.util.ResourceBundle;
 import Project.DataBase.RidesDataBase;
 import Project.Ride.Ride;
 import Project.Users.Driver;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
@@ -18,7 +17,7 @@ import javafx.stage.Stage;
 
 import java.util.*;
 
-public class AddRideController implements Initializable {
+public class AddRideController {
     private Driver driver;
     private RidesDataBase rideDB;
     private ProfileCotroller profileController;
@@ -48,43 +47,44 @@ public class AddRideController implements Initializable {
     @FXML
     private Label Location;
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        ObservableList<String> times = FXCollections.observableArrayList();
-        for (int h = 8; h <= 21; h++) {
-            for (int m = 0; m < 60; m += 15) {
-                if (h == 21 && m > 0) break;
-                String time = String.format("%02d:%02d", h, m);
-                times.add(time);
+public void TimeValidating() {
+    ObservableList<String> times = FXCollections.observableArrayList();
+    for (int h = 8; h <= 21; h++) {
+        for (int m = 0; m < 60; m += 15) {
+            if (h == 21 && m > 0)
+                break;
+            String time = String.format("%02d:%02d", h, m);
+            times.add(time);
+        }
+    }
+    HourPicker.setValueFactory(new SpinnerValueFactory.ListSpinnerValueFactory<>(times));
+
+    DatePicker.setDayCellFactory(picker -> new DateCell() {
+        @Override
+        public void updateItem(LocalDate date, boolean empty) {
+            super.updateItem(date, empty);
+            if (date.isBefore(LocalDate.now())) {
+                setDisable(true);
+                setStyle("-fx-background-color: #ffc0cb;");
+            }
+            if (date.getDayOfWeek() == java.time.DayOfWeek.SATURDAY) {
+                setDisable(true);
+                setStyle("-fx-background-color: #90ee90;");
+            }
+
+            if (date.equals(LocalDate.now())) {
+                setDisable(true);
+                setStyle("-fx-background-color: #add8e6;");
             }
         }
-        HourPicker.setValueFactory(new SpinnerValueFactory.ListSpinnerValueFactory<>(times));
-        DatePicker.setDayCellFactory(picker -> new DateCell() {
-            @Override
-            public void updateItem(LocalDate date, boolean empty) {
-                super.updateItem(date, empty);
+    });
+}
 
-                if (date.isBefore(LocalDate.now())) {
-                    setDisable(true);
-                    setStyle("-fx-background-color: #ffc0cb;");
-                }
-                if (date.getDayOfWeek() == java.time.DayOfWeek.SATURDAY) {
-                    setDisable(true);
-                    setStyle("-fx-background-color: #90ee90;");
-                }
-
-                if (date.equals(LocalDate.now())) {
-                    setDisable(true);
-                    setStyle("-fx-background-color: #add8e6;");
-                }
-            }
-        });
-    }
     public void AddRide() {
         String selectedHour = HourPicker.getValue();
         LocalDate selectedDate = DatePicker.getValue();
         if (selectedHour == null || selectedDate == null) {
-            System.out.println("choose a date&time");
+            showNotice("choose A Date ");
             return;
         }
         String dayName = selectedDate.getDayOfWeek().toString().substring(0, 1).toUpperCase() +
@@ -95,7 +95,6 @@ public class AddRideController implements Initializable {
         String location = driver.getLocation();
         String destination = driver.getCollege();
 
-        // تحقق إذا رحلة بنفس الوقت والتاريخ موجودة بالفعل للسائق
         List<Ride> existingRides = rideDB.getRidesByDriver(driver.getId());
         for (Ride ride : existingRides) {
             if (ride.getDateAndDay().equalsIgnoreCase(dateAndDay) && ride.getHour().equalsIgnoreCase(selectedHour)) {
@@ -105,7 +104,7 @@ public class AddRideController implements Initializable {
         }
 
         rideDB.addRide(seats, driver, location, destination, selectedHour, dateAndDay);
-        System.out.println("✅ Ride Added!");
+        showNotice("Ride Added Successfully");
 
         if (profileController != null) {
             profileController.loadDriverRidesToListView();

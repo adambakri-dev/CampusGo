@@ -25,11 +25,6 @@ public class RegisterController {
     }
 
     private UserDatabase userDB;
-
-    public RegisterController(UserDatabase db) {
-        this.userDB = db;
-    }
-
     @FXML
     private TextField ID;
     @FXML
