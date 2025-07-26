@@ -70,11 +70,9 @@ public class ChooseRoleController {
                 System.out.println("you are a driver");
                 GoToDriverProfile(driver);
             } else if (passenger != null) {
-                Driver newDriver = new Driver(4, "CarModel", student, passenger.getMajor(), passenger.getYears());
-                System.out.println("you were a passenger and now also a driver");
-//                userDB.updateUser(newDriver);
-                userDB.addDriver(newDriver);
-                GoToDriverProfile(newDriver);
+                ToDriverRole toDriverRole = new ToDriverRole();
+                toDriverRole.setStudent(student);
+                toDriverRole.ToDriverUI();
             }
         }
     }

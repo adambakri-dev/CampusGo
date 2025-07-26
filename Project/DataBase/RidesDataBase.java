@@ -71,6 +71,7 @@ public class RidesDataBase {
         }
         return matchedRides;
     }
+
     //------get registered rides for passenger------
     public List<Ride> getRegisteredRidesForPassenger(Passenger passenger) {
         List<Ride> registeredRides = new ArrayList<>();
@@ -103,6 +104,7 @@ public class RidesDataBase {
         }
         return registeredRides;
     }
+
     //------------get recommended rides -----------------
     public List<Ride> getRecommendedRides(Passenger passenger) {
         List<Ride> recommended = new ArrayList<>();
@@ -176,6 +178,7 @@ public class RidesDataBase {
         inputFile.delete();
         tempFile.renameTo(inputFile);
     }
+
     //----reserved ride for passenger
     public void reserveRideForPassenger(Ride ride, Passenger passenger) {
         File file = new File(passengerRidesFile);
@@ -239,7 +242,7 @@ public class RidesDataBase {
             bw.write("DriverID,DriverName,Location,Destination,Hour,Date&Time,seats");
             bw.newLine();
             for (Ride ride : rides) {
-                String line = ride.getDriver().getId()+ "," +
+                String line = ride.getDriver().getId() + "," +
                         ride.getDriverName() + "," +
                         ride.getLocation() + "," +
                         ride.getDestination() + "," +

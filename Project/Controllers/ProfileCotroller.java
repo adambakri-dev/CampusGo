@@ -237,7 +237,6 @@ public class ProfileCotroller {
         if (passenger != null) {
             RidesDataBase rideDB = new RidesDataBase(passenger);
             List<Ride> recommendedRides = rideDB.getRecommendedRides(passenger);
-
             List<Ride> filteredRides = filterFutureRides(recommendedRides);
             ObservableList<Ride> observableRides = FXCollections.observableArrayList(filteredRides);
             RecommendedRides.setItems(observableRides);

@@ -18,7 +18,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="335.0" style="-fx-background-color: linear-gradient(to top, #0c0950, #1d1a8f, #261fb3);" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Project.Controllers.RegisterController">
    <children>
-      <VBox alignment="TOP_CENTER" layoutX="14.0" layoutY="15.0" prefHeight="200.0" prefWidth="837.0" style="-fx-background-color: F8F8FF; -fx-background-radius: 15;" AnchorPane.bottomAnchor="15.666666666666742" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="17.33333333333337" AnchorPane.topAnchor="15.0">
+      <VBox alignment="TOP_CENTER" layoutX="14.0" layoutY="15.0" prefHeight="200.0" prefWidth="837.0" spacing="10.0" style="-fx-background-color: F8F8FF; -fx-background-radius: 15;" AnchorPane.bottomAnchor="15.666666666666742" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="17.33333333333337" AnchorPane.topAnchor="15.0">
          <children>
             <ImageView fitHeight="206.0" fitWidth="206.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -192,41 +192,6 @@
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
                      <children>
-                        <Label alignment="CENTER" prefHeight="30.0" prefWidth="115.0" style="-fx-background-color: #1d1a8f; -fx-background-radius: 200;" text="Code : " textFill="WHITE">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                           <padding>
-                              <Insets bottom="5.0" top="5.0" />
-                           </padding>
-                           <effect>
-                              <DropShadow height="40.0" radius="19.5" spread="0.2" width="40.0" />
-                           </effect>
-                           <font>
-                              <Font name="System Bold" size="14.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="code" alignment="CENTER" prefHeight="30.0" prefWidth="150.0" promptText="Enter A Code" style="-fx-background-radius: 15;">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                           <effect>
-                              <Blend />
-                           </effect>
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                           <padding>
-                              <Insets left="10.0" right="10.0" />
-                           </padding>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </TextField>
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
-                     <children>
                         <Label alignment="CENTER" prefHeight="30.0" prefWidth="115.0" style="-fx-background-color: #1d1a8f; -fx-background-radius: 200;" text="Location" textFill="WHITE">
                            <HBox.margin>
                               <Insets />
@@ -292,20 +257,32 @@
                   <Insets />
                </VBox.margin>
             </VBox>
-            <Button fx:id="registerbutton" mnemonicParsing="false" onAction="#Register" style="-fx-background-color: #ffbb00; -fx-background-radius: 20;" text="Register">
-               <font>
-                  <Font name="Arial Bold" size="14.0" />
-               </font>
-               <VBox.margin>
-                  <Insets bottom="10.0" top="8.0" />
-               </VBox.margin>
-               <effect>
-                  <DropShadow />
-               </effect>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
+            <HBox alignment="CENTER" prefHeight="10.0" prefWidth="200.0" spacing="15.0">
+               <children>
+                  <Button fx:id="registerbutton" mnemonicParsing="false" onAction="#Register" style="-fx-background-color: #ffbb00; -fx-background-radius: 20;" text="Register">
+                     <font>
+                        <Font name="Arial Bold" size="14.0" />
+                     </font>
+                     <effect>
+                        <DropShadow />
+                     </effect>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button fx:id="Return" mnemonicParsing="false" onAction="#ReturnToLogin" style="-fx-background-color: #ffbb00; -fx-background-radius: 20;" text="Return">
+                     <font>
+                        <Font name="Arial Bold" size="14.0" />
+                     </font>
+                     <effect>
+                        <DropShadow />
+                     </effect>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+               </children>
+            </HBox>
          </children>
          <effect>
             <DropShadow height="40.0" radius="19.5" spread="0.2" width="40.0" />

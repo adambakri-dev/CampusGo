@@ -20,6 +20,7 @@ public class Student {
         this.gender=gender;
         this.Location=Location;
 
+
     }
 
     // Getters

@@ -22,8 +22,7 @@ import javafx.scene.layout.VBox;
 
 public class RegisterController {
 
-    public RegisterController() {
-    }
+    public RegisterController() {}
 
     private UserDatabase userDB;
     @FXML
@@ -42,6 +41,8 @@ public class RegisterController {
     private TextField Location;
     @FXML
     private Button registerbutton;
+    @FXML
+    private Button Return;
     @FXML
     private RadioButton maleRadio;
     @FXML
@@ -75,27 +76,36 @@ public class RegisterController {
         String username= Username.getText().trim();
         String password=Password.getText().trim();
         String Mail=mail.getText().trim();
-        String Code=code.getText().trim();
         String location= Location.getText().trim();
         String college=College.getText().trim();
         boolean UserNameCheck=username.length()>5&&username.length()<20;
         boolean IdCheck=userId.length()>1&&userId.length()<= 9;
         this.userDB=new UserDatabase();
-        if (userId.isEmpty()&&username.isEmpty()&&password.isEmpty()&&Mail.isEmpty()&&Code.isEmpty()&&location.isEmpty()&&college.isEmpty()){
+        if (userId.isEmpty()|| username.isEmpty() || password.isEmpty() || Mail.isEmpty() || location.isEmpty() || college.isEmpty()){
             if (UserNameCheck==false){
                 showNotice("Invalid UserName");
+                return;
             }
             if (IdCheck==false){
                 showNotice("Invalid ID");
+                return;
             }
             showNotice("Register Failed");
+            return;
         }else {
-            if (register(userId,username,password,Mail,college,getSelectedGender(),location) && PasswordChecker.IsValid(password)&&UserNameCheck&&IdCheck){
+            if (RegisterChecker(userId,username,password,Mail,college,getSelectedGender(),location) && PasswordChecker.IsValid(password)&&UserNameCheck&&IdCheck){
                 showNotice("register success");
-            }else {
-                showNotice("register failed");
             }
         }
+    }
+    public boolean RegisterChecker(String id, String name, String password, String email, String college, String gender,String location) {
+        if (userDB.userExists(id)) {
+            showNotice("This ID is already Exist");
+            return false;
+        }
+        Student newStudent = new Student(id, name, password, email, college, gender,location);
+        ReturnToLogin();
+        return userDB.register(newStudent);
     }
 
     @FXML
@@ -113,15 +123,7 @@ public class RegisterController {
         return null;
     }
 
-    public boolean register(String id, String name, String password, String email, String college, String gender,String location) {
-        if (userDB.userExists(id)) {
-            showNotice("This ID is already Exist");
-            return false;
-        }
-        Student newStudent = new Student(id, name, password, email, college, gender,location);
-        ReturnToLogin();
-        return userDB.register(newStudent);
-    }
+
 
     public void ReturnToLogin(){
         try {
