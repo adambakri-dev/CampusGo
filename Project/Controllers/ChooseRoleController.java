@@ -23,53 +23,69 @@ public class ChooseRoleController {
 
     private UserDatabase userDB;
     private Stage currentStage;
-
+    // from this we will get the window to close it when we finish from it
     public void setCurrentStage(Stage stage) {
         this.currentStage = stage;
     }
-
+    // this will take a student from login to take his info and check them in User Data Base
     public void setStudent(Student student) {
         this.student = student;
     }
-
     public ChooseRoleController() {}
 
+    // this is UI for Choose Role
     public void ChooseRoleUI() {
         try {
+            // this is a Variable in JavaFx to save in it a UI we made
             FXMLLoader loader = new FXMLLoader(
                     new File("C:\\Users\\watanimall\\IdeaProjects\\CollegeProject\\Project\\UI\\ChooseRoleUI.fxml")
                             .toURI().toURL()
             );
+            //URI : this will define this File
+            //URL : will translate this file to any way I want
+
+            //Parent : this variable we can save on it all the type of elements in javafx and will take them from file
             Parent root = loader.load();
             ChooseRoleController controller = loader.getController();
             controller.setStudent(student);
+            // this is the scene and we save on it all the elements in root
             Scene scene = new Scene(root);
             Stage stage = new Stage();
             controller.setCurrentStage(stage);
+            // Stage : is the window that the user will see and we will put on it the scene that have all elements we save them in root
             stage.setScene(scene);
             stage.setTitle("CampusGo Choose Role");
+            // this method will show us the window
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+    /*there is two roles Driver/Passenger and we will take the info of user and after that he will choose the role he want
+     and we will check in User Data Base if he suitable to be Driver/Passenger
+    */
 
+    // this function is the responsible to user to choose a Driver
     public void DriverRole() {
+        // this will get a ID of student
         String id = student.getId();
         userDB = new UserDatabase();
+        //now we got the info of this student if he is a driver or passenger
         Driver driver = userDB.getDriverById(id);
         Passenger passenger = userDB.getPassengerById(id);
-
+        //this mean that he wasn't a driver or passenger before
         if (driver == null && passenger == null) {
-            System.out.println("you are not registered as driver");
+            // now the user will moved to Driver Role
             ToDriverRole toDriverRole = new ToDriverRole();
             toDriverRole.setStudent(student);
             toDriverRole.ToDriverUI();
         } else {
+            // this mean that he was a driver before
             if (driver != null) {
-                System.out.println("you are a driver");
+                // so he will go to his profile directly
                 GoToDriverProfile(driver);
             } else if (passenger != null) {
+                // if he was a passenger and want to be a driver will move user to To Driver Role
                 ToDriverRole toDriverRole = new ToDriverRole();
                 toDriverRole.setStudent(student);
                 toDriverRole.ToDriverUI();
@@ -84,18 +100,14 @@ public class ChooseRoleController {
         Driver driver = userDB.getDriverById(id);
 
         if (passenger == null && driver == null) {
-            System.out.println("you are not registered as passenger");
             ToPassengerRole toPassengerRole = new ToPassengerRole();
             toPassengerRole.setStudent(student);
             toPassengerRole.ToPassengerRoleUI();
         } else {
             if (passenger != null) {
-                System.out.println("you are a passenger");
                 GoToPassengerProfile(passenger);
             } else if (driver != null) {
                 Passenger newPassenger = new Passenger(driver.getMajor(), driver.getYear(), student);
-                System.out.println("you were a driver and now also a passenger");
-//                userDB.updateUser(newPassenger);
                 userDB.addPassenger(newPassenger);
                 GoToPassengerProfile(newPassenger);
             }
@@ -103,10 +115,12 @@ public class ChooseRoleController {
     }
 
     public void GoToDriverProfile(Driver driver) {
+        // this will take a stage and close it after we finished from it
         if (currentStage != null) {
             currentStage.close();
         }
         ProfileCotroller profileCotroller = new ProfileCotroller();
+        // and will transfer the user and student to this class
         profileCotroller.setDriver(driver);
         profileCotroller.setStudent(student);
         profileCotroller.DriverProfileUI();

@@ -52,18 +52,20 @@ public class ToPassengerRole {
     }
 
     public void BecomePassenger(){
+        // take a data from UI
         this.userDB=new UserDatabase();
         String major=Major.getText().trim();
         String year=Years.getText().trim();
-
+        // Check a data that user insert them in UI
         if (major.isEmpty()&&year.isEmpty()){
             System.out.println("become passenger failed");
         }else {
             Passenger passenger=new Passenger(major,year,student);
             this.userDB=new UserDatabase();
+            // add a passenger to User Data Base and add him to CSV file for passenger
             userDB.addPassenger(passenger);
-//            userDB.updateUser(passenger);
             System.out.println("become a passenger success");
+            // after becoming a passenger success will transfer the user to profile
             ProfileCotroller profileCotroller=new ProfileCotroller();
             profileCotroller.setPassenger(passenger);
             profileCotroller.setStudent(student);

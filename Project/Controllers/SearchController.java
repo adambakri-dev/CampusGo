@@ -61,7 +61,7 @@ public class SearchController implements Initializable {
         String destination = CollegeField.getText().trim();
         String hour = HourPicker.getValue();  // Spinner returns selected value
         LocalDate selectedDate = DatePicker.getValue();
-
+        // this will check if we already fill the fields
         if (location.isEmpty() || destination.isEmpty() || hour == null || selectedDate == null) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Missing Information");
@@ -71,6 +71,7 @@ public class SearchController implements Initializable {
             return;
         }
 
+        // this will make a date and hour in the way we want to save them in Ride and in CSV file
         String dayName = selectedDate.getDayOfWeek().toString().substring(0, 1).toUpperCase()
                 + selectedDate.getDayOfWeek().toString().substring(1).toLowerCase();
         String dateAndDay = dayName + " " + selectedDate.toString();
@@ -91,6 +92,7 @@ public class SearchController implements Initializable {
         RideList.setCellFactory(param -> new ListCell<>() {
             @Override
             protected void updateItem(Ride ride, boolean empty) {
+                //  this will show is a way that user see a Ride in List
                 super.updateItem(ride, empty);
                 if (empty || ride == null) {
                     setText(null);
@@ -101,7 +103,7 @@ public class SearchController implements Initializable {
             }
         });
     }
-
+    // this will make a user reserve a ride from the list
     public void reserveSelectedRide() {
         Ride selectedRide = RideList.getSelectionModel().getSelectedItem();
         if (selectedRide != null && passenger != null) {
@@ -129,6 +131,7 @@ public class SearchController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         ObservableList <String> times = FXCollections.observableArrayList();
+        //this will make us just choose a time between 8AM-9PM and just we can increase 15 minutes every time
         for (int h = 8; h <= 21; h++) {
             for (int m = 0; m < 60; m += 15) {
                 if (h == 21 && m > 0) break;
@@ -138,6 +141,7 @@ public class SearchController implements Initializable {
         }
         HourPicker.setValueFactory(new SpinnerValueFactory.ListSpinnerValueFactory<>(times));
 
+        // this will make a calendar as we want like abandon to choose a date before or we can't choose a saturday
         DatePicker.setDayCellFactory(picker -> new DateCell() {
             @Override
             public void updateItem(LocalDate date, boolean empty) {

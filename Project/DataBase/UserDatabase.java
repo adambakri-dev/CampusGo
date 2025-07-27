@@ -8,7 +8,6 @@ import java.util.*;
 
 public class UserDatabase {
     private HashMap <String , Student> DB = new HashMap<>();
-
     public UserDatabase() {
         //get users from file.
         List<Student> loadedUsers = loadUsersFromCSV();
@@ -52,14 +51,6 @@ public class UserDatabase {
         return DB.containsKey(id);//this will check if the id in database
     }
 
-//    public boolean updateUser(Student updatedUser) {
-//        if (!DB.containsKey(updatedUser.getId())) {//this will update the user according to his role.
-//            return false;
-//        }
-//        DB.put(updatedUser.getId(), updatedUser);
-//        saveToFile();
-//        return true;
-//    }
 
     private void saveToFile() {
         saveUsersToCSV(getAllStudents());

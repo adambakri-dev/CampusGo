@@ -27,16 +27,20 @@ public class LoginController {
     private TextField IdField;
 
     public void Login() {
+        // take the info from UI
         String userId = IdField.getText().trim();
         String password = PassField.getText().trim();
+        // check that user enter data in ui
         if (userId.isEmpty() || password.isEmpty()) {
             showNotice("Please fill in both fields.");
             return;
         }
+        //this will check if he did login before or not
         Student student = LoginChecker(userId, password);
         if (student == null) {
             showNotice("Login Failed: Incorrect ID or password.");
         } else {
+            // this will take a stage from the scene and transfer every Stage to all classes in the code to close them when we need
             Stage currentStage = (Stage) loginin.getScene().getWindow();
             GoToChooseRole(currentStage, student);
         }
@@ -45,16 +49,19 @@ public class LoginController {
     //this will check if he did login before or not and will handle with it according to a situation.
     public Student LoginChecker(String id, String password ) {
         this.userDB=new UserDatabase();
+        // this function will check if this id is in data base and will check if the password he enter is his password
         return userDB.login(id, password);
     }
 
     @FXML
     private Button registerButton;
+    // if the user press in register button he will move to Register UI
     public void GoToRegister(ActionEvent event){
        RegisterController registerController=new RegisterController();
        registerController.RegisterUI(event);
     }
 
+    //if he finish login successfully he will go ToChooseRole UI
     public void GoToChooseRole(Stage currentstage ,Student student){
         currentstage.close();
         ChooseRoleController chooseRoleController=new ChooseRoleController();

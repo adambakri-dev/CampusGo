@@ -302,7 +302,18 @@ public class ProfileCotroller {
             System.out.println("❌ Please select a ride to delete.");
         }
     }
+    public void initDriverProfile() {
+        if (driver != null ) {
+            Name.setText(driver.getName());
+            College.setText(driver.getCollege());
+            Mail.setText(driver.getEmail());
+            Location.setText(driver.getLocation());
+            loadDriverRidesToListView();
+        }
+    }
 
+
+    //==========================================================================================
     private List<Ride> filterFutureRides(List<Ride> rides) {
         List<Ride> filtered = new ArrayList<>();
         LocalDate today = LocalDate.now();
@@ -324,17 +335,4 @@ public class ProfileCotroller {
         }
         return filtered;
     }
-
-
-    public void initDriverProfile() {
-        if (driver != null ) {
-            Name.setText(driver.getName());
-            College.setText(driver.getCollege());
-            Mail.setText(driver.getEmail());
-            Location.setText(driver.getLocation());
-            loadDriverRidesToListView();
-        }
-    }
-
-
 }

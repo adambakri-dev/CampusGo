@@ -72,16 +72,23 @@ public class RegisterController {
     //This function will take an info about new user to save it in DataBase
     public void Register() {
         Pass_Check PasswordChecker=new Pass_Check();
+        //this will take a data from UI
         String userId = ID.getText().trim();
         String username= Username.getText().trim();
         String password=Password.getText().trim();
         String Mail=mail.getText().trim();
         String location= Location.getText().trim();
         String college=College.getText().trim();
+        // there is a checkers for a data like (Username/Email/ID)
         boolean UserNameCheck=username.length()>5&&username.length()<20;
-        boolean IdCheck=userId.length()>1&&userId.length()<= 9;
+        boolean IdCheck = userId.matches("\\d{9}");
+        boolean emailCheck = Mail.contains("@") && Mail.contains(".");
         this.userDB=new UserDatabase();
-        if (userId.isEmpty()|| username.isEmpty() || password.isEmpty() || Mail.isEmpty() || location.isEmpty() || college.isEmpty()){
+        //this if will check if all data not empty and they are not false
+        if (userId.isEmpty()|| username.isEmpty() || password.isEmpty() || Mail.isEmpty() || location.isEmpty() || college.isEmpty() || UserNameCheck==false || IdCheck==false || PasswordChecker.IsValid(password)==false || emailCheck==false){
+            if (emailCheck==false){
+                showNotice("Invalid E-mail");
+            }
             if (UserNameCheck==false){
                 showNotice("Invalid UserName");
                 return;
@@ -93,11 +100,14 @@ public class RegisterController {
             showNotice("Register Failed");
             return;
         }else {
-            if (RegisterChecker(userId,username,password,Mail,college,getSelectedGender(),location) && PasswordChecker.IsValid(password)&&UserNameCheck&&IdCheck){
+            // if registerchecker return true and all data checker are true the register will success
+            if (RegisterChecker(userId,username,password,Mail,college,getSelectedGender(),location) && PasswordChecker.IsValid(password)&&UserNameCheck&&IdCheck&&emailCheck){
                 showNotice("register success");
             }
         }
     }
+
+    //this function will check if the user is already in data base if not this will add it to the User Data Base and return true
     public boolean RegisterChecker(String id, String name, String password, String email, String college, String gender,String location) {
         if (userDB.userExists(id)) {
             showNotice("This ID is already Exist");
@@ -108,6 +118,7 @@ public class RegisterController {
         return userDB.register(newStudent);
     }
 
+    // this will make the user just choose a male or female
     @FXML
     public void initialize() {
         genderGroup = new ToggleGroup();
@@ -115,6 +126,7 @@ public class RegisterController {
         femaleRadio.setToggleGroup(genderGroup);
         maleRadio.setSelected(true);
     }
+    // this will take a what the gender that user chose
     public String getSelectedGender() {
         RadioButton selected = (RadioButton) genderGroup.getSelectedToggle();
         if (selected != null) {

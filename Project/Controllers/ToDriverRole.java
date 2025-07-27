@@ -53,20 +53,25 @@ public class ToDriverRole {
         }
     }
 
+    // this will make the user go to Driver Role
     public void BecomeDriver(){
+        // here will get all data from UI
         String seats=Seats.getText().trim();
         int seat=Integer.parseInt(seats);
         String major=Major.getText().trim();
         String year=Years.getText().trim();
         String carmodel=CarModel.getText().trim();
+        // if all data are not like we need become a driver wioll be failed
         if (seat==0&&major.isEmpty()&&year.isEmpty()&&carmodel.isEmpty()){
             System.out.println("become a driver failed");
         }else {
+            // maka a driver from the data we get
             Driver driver = new Driver(seat, carmodel, student, major, year);
             this.userDB=new UserDatabase();
-//            userDB.updateUser(driver);
+            // this will add a driver to data base and the CSV file for drivers
             userDB.addDriver(driver);
             System.out.println("become a driver success");
+            // after becoming a driver will transfer the user to his Profile.
             ProfileCotroller profileCotroller=new ProfileCotroller();
             profileCotroller.setStudent(student);
             profileCotroller.setDriver(driver);
