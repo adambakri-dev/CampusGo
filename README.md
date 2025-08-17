@@ -14,7 +14,7 @@
 - 📅 Drivers can schedule rides by selecting day and time
 - 📍 Store and retrieve ride data
 - 📊 View all rides scheduled by a specific driver
-- ✅ Console-based and Object-Oriented Java structure
+- ✅ Object-Oriented Java structure
 
 ---
 
